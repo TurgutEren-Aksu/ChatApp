@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B18D2A452AFD8CD8000C4B7B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18D2A442AFD8CD8000C4B7B /* FirebaseManager.swift */; };
 		B1E960772AD8BCEC0023F9A4 /* ChatAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E960762AD8BCEC0023F9A4 /* ChatAppApp.swift */; };
 		B1E960792AD8BCEC0023F9A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E960782AD8BCEC0023F9A4 /* ContentView.swift */; };
 		B1E9607B2AD8BCEF0023F9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1E9607A2AD8BCEF0023F9A4 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B18D2A442AFD8CD8000C4B7B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		B1E960732AD8BCEC0023F9A4 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1E960762AD8BCEC0023F9A4 /* ChatAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppApp.swift; sourceTree = "<group>"; };
 		B1E960782AD8BCEC0023F9A4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				B1E960762AD8BCEC0023F9A4 /* ChatAppApp.swift */,
 				B1E960782AD8BCEC0023F9A4 /* ContentView.swift */,
+				B18D2A442AFD8CD8000C4B7B /* FirebaseManager.swift */,
 				B1E960BB2AD8CD640023F9A4 /* GoogleService-Info.plist */,
 				B1E9607A2AD8BCEF0023F9A4 /* Assets.xcassets */,
 				B1E9607C2AD8BCEF0023F9A4 /* Preview Content */,
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B18D2A452AFD8CD8000C4B7B /* FirebaseManager.swift in Sources */,
 				B1E960792AD8BCEC0023F9A4 /* ContentView.swift in Sources */,
 				B1E960772AD8BCEC0023F9A4 /* ChatAppApp.swift in Sources */,
 			);

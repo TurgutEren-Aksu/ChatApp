@@ -7,124 +7,75 @@
 
 import SwiftUI
 import Firebase
-
-
-class FirebaseManager: NSObject {
-	
-	let auth: Auth
-	static let shared = FirebaseManager()
-	override init() {
-		FirebaseApp.configure()
-		
-		
-		
-		self.auth = Auth.auth()
-		
-		super.init()
-		
-	}
-}
-
 struct ContentView: View {
-	
-	@State var isLoginHere = false
-	@State var email = ""
-	@State var password = ""
-	
+	@StateObject private var viewModel = FirebaseManager()
+	@State private var isLoginHere = false
+	@State private var email = ""
+	@State private var password = ""
 
-	
-    var body: some View {
-		
-		NavigationView{
-			ScrollView{
-				VStack(spacing: 16){
-					Picker(selection: $isLoginHere, label: Text("Picker Here")){
-						Text("Login")
-							.tag(true)
-						Text("Create Account")
-							.tag(false)
-					}.pickerStyle(SegmentedPickerStyle())
-						.padding()
-					if !isLoginHere{
-						Button{
-							
-						}label: {
-							Image(systemName: "person.fill")
-								.font(.system(size: 64))
-								.padding()
-						}
+	var body: some View {
+		NavigationView {
+			ScrollView {
+				VStack(spacing: 16) {
+					Picker(selection: $isLoginHere, label: Text("Picker Here")) {
+						Text("Login").tag(true)
+						Text("Create Account").tag(false)
 					}
-					Group{
+					.pickerStyle(SegmentedPickerStyle())
+					.padding()
+
+					if !isLoginHere {
+						Image(systemName: "person.fill")
+							.font(.system(size: 64))
+							.padding()
+					}
+
+					Group {
 						TextField("Email", text: $email)
 							.keyboardType(.emailAddress)
 							.autocapitalization(.none)
-							
+
 						SecureField("Password", text: $password)
-							
-					}.padding(12)
-						.background(Color.white)
-					
-					
-					Button{
+					}
+					.padding(12)
+					.background(Color.white)
+
+					Button {
 						handleAction()
-					}label: {
-						HStack{
+					} label: {
+						HStack {
 							Spacer()
 							Text(isLoginHere ? "Log In" : "Create Account")
-								.font(.system(size:20,weight: .semibold))
-								.foregroundStyle(.white)
-								.padding(.vertical,10)
-								Spacer()
-						}.background(Color.blue)
+								.font(.system(size: 20, weight: .semibold))
+								.foregroundColor(.white)
+								.padding(.vertical, 10)
+							Spacer()
+						}
 					}
-					Text(self.loginStatusMessage)
+					.background(Color.blue)
+
+					Text(viewModel.loginStatusMessage)
 						.foregroundColor(.red)
 				}
 				.padding()
-				
-				
 			}
-			.navigationTitle(isLoginHere ? "Login" : "Creat Account")
+			.navigationTitle(isLoginHere ? "Login" : "Create Account")
 			.background(Color("newGray"))
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
-    }
-	private func handleAction(){
-		if isLoginHere{
-			loginUser()
-		}else{
-			newAccount()
-		}
 	}
-		private func loginUser(){
-			FirebaseManager.shared.auth.signIn(withEmail: email, password: password) { result, error in
-				if let error = error{
-					print("Giriş işlemi başarısız ",error)
-					self.loginStatusMessage = "Giriş işlemi Başarısız\(error)"
-					return
-				}
-				print("Giriş işlemi başarılı \(result?.user.uid ?? "")")
-				self.loginStatusMessage = "Giriş işlemi başarılı \(result?.user.uid ?? "")"
-					
-			}
-		}
-	
-	
-	@State var loginStatusMessage = ""
-	private func newAccount(){
-		FirebaseManager.shared.auth.createUser(withEmail: email, password: password) { result, error in
-			if let error = error{
-				print("Kullanıcı oluşturma başarısız ",error)
-				self.loginStatusMessage = "Kullanıcı Oluşturma Başarısız\(error)"
-				return
-			}
-			print("Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")")
-			self.loginStatusMessage = "Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")"
+
+	private func handleAction() {
+		if isLoginHere {
+			viewModel.loginUser(email: email, password: password)
+		} else {
+			viewModel.newAccount(email: email, password: password)
 		}
 	}
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+	static var previews: some View {
+		ContentView()
+	}
 }
-
