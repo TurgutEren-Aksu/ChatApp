@@ -12,7 +12,7 @@ struct ContentView: View {
 	@State private var isLoginHere = false
 	@State private var email = ""
 	@State private var password = ""
-
+	
 	var body: some View {
 		NavigationView {
 			ScrollView {
@@ -23,37 +23,45 @@ struct ContentView: View {
 					}
 					.pickerStyle(SegmentedPickerStyle())
 					.padding()
-
+					
 					if !isLoginHere {
 						Image(systemName: "person.fill")
 							.font(.system(size: 64))
 							.padding()
 					}
-
+					
 					Group {
 						TextField("Email", text: $email)
 							.keyboardType(.emailAddress)
 							.autocapitalization(.none)
-
+						
 						SecureField("Password", text: $password)
 					}
 					.padding(12)
 					.background(Color.white)
-
-					Button {
-						handleAction()
-					} label: {
-						HStack {
-							Spacer()
-							Text(isLoginHere ? "Log In" : "Create Account")
-								.font(.system(size: 20, weight: .semibold))
-								.foregroundColor(.white)
-								.padding(.vertical, 10)
-							Spacer()
+					
+					
+					
+					NavigationLink(
+						destination: LoggedInView(),
+						isActive: $viewModel.loggedIn,
+						label: {
+							Button {
+								handleAction()
+							} label: {
+								HStack {
+									Spacer()
+									Text(isLoginHere ? "Log In" : "Create Account")
+										.font(.system(size: 20, weight: .semibold))
+										.foregroundColor(.white)
+										.padding(.vertical, 10)
+									Spacer()
+								}
+							}
+							.background(Color.blue)
 						}
-					}
-					.background(Color.blue)
-
+					)
+					
 					Text(viewModel.loginStatusMessage)
 						.foregroundColor(.red)
 				}
@@ -64,13 +72,18 @@ struct ContentView: View {
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
 	}
-
+	
 	private func handleAction() {
 		if isLoginHere {
 			viewModel.loginUser(email: email, password: password)
 		} else {
 			viewModel.newAccount(email: email, password: password)
 		}
+	}
+}
+struct LoggedInView: View{
+	var body: some View{
+		Text("You are logged in!")
 	}
 }
 
