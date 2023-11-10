@@ -11,6 +11,7 @@ import Foundation
 
 class FirebaseManager: ObservableObject {
 	@Published var loginStatusMessage = ""
+	@Published var loggedIn = false
 	private let auth: Auth
 	
 	init() {
@@ -23,10 +24,12 @@ class FirebaseManager: ObservableObject {
 			if let error = error {
 				print("Giriş işlemi başarısız ", error)
 				self.loginStatusMessage = "Giriş işlemi Başarısız\(error)"
+				self.loggedIn = false
 				return
 			}
 			print("Giriş işlemi başarılı \(result?.user.uid ?? "")")
 			self.loginStatusMessage = "Giriş işlemi başarılı \(result?.user.uid ?? "")"
+			self.loggedIn = true
 		}
 	}
 
@@ -35,10 +38,12 @@ class FirebaseManager: ObservableObject {
 			if let error = error {
 				print("Kullanıcı oluşturma başarısız ", error)
 				self.loginStatusMessage = "Kullanıcı Oluşturma Başarısız\(error)"
+				self.loggedIn = false
 				return
 			}
 			print("Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")")
 			self.loginStatusMessage = "Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")"
+			self.loggedIn = true
 		}
 	}
 }
