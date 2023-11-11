@@ -18,32 +18,33 @@ class FirebaseManager: ObservableObject {
 		FirebaseApp.configure()
 		self.auth = Auth.auth()
 	}
-
+	
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in
 			if let error = error {
-				print("Giriş işlemi başarısız ", error)
-				self.loginStatusMessage = "Giriş işlemi Başarısız\(error)"
-				self.loggedIn = false
+				self.handleAuthError(error: error)
 				return
 			}
-			print("Giriş işlemi başarılı \(result?.user.uid ?? "")")
-			self.loginStatusMessage = "Giriş işlemi başarılı \(result?.user.uid ?? "")"
-			self.loggedIn = true
+			self.handleSuccess(message: "Giriş işlemi başarılı", userID: result?.user.uid)
 		}
 	}
-
+	
 	func newAccount(email: String, password: String) {
 		auth.createUser(withEmail: email, password: password) { result, error in
 			if let error = error {
-				print("Kullanıcı oluşturma başarısız ", error)
-				self.loginStatusMessage = "Kullanıcı Oluşturma Başarısız\(error)"
-				self.loggedIn = false
+				self.handleAuthError(error: error)
 				return
 			}
-			print("Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")")
-			self.loginStatusMessage = "Kullanıcı oluşturma başarılı \(result?.user.uid ?? "")"
-			self.loggedIn = true
+			self.handleSuccess(message: "Kullanıcı oluşturma başarılı", userID: result?.user.uid)
 		}
+	}
+	private func handleAuthError(error: Error){
+		self.loginStatusMessage = "Hata: \(error.localizedDescription)"
+		self.loggedIn = false
+	}
+	private func handleSuccess(message:String, userID:String?){
+		print("\(message) \(userID ?? "")")
+		self.loginStatusMessage = "\(message) \(userID ?? "")"
+		self.loggedIn = true
 	}
 }
