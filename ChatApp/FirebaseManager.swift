@@ -7,18 +7,17 @@
 
 import Foundation
 import Firebase
-import Foundation
 
 class FirebaseManager: ObservableObject {
 	@Published var loginStatusMessage = ""
 	@Published var loggedIn = false
+	@Published var message: [Message] = []
 	private let auth: Auth
 	
 	init() {
 		FirebaseApp.configure()
 		self.auth = Auth.auth()
 	}
-	
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in
 			if let error = error {
@@ -46,5 +45,8 @@ class FirebaseManager: ObservableObject {
 		print("\(message) \(userID ?? "")")
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
+	}
+	func fetchMessages(){
+		
 	}
 }
