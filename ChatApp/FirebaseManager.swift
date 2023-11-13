@@ -15,7 +15,7 @@ class FirebaseManager: ObservableObject {
 	private let auth: Auth
 	
 	init() {
-		FirebaseApp.configure()
+		//		FirebaseApp.configure()
 		self.auth = Auth.auth()
 	}
 	func loginUser(email: String, password: String) {

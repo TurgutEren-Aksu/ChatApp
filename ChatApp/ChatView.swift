@@ -4,7 +4,7 @@ import SwiftUI
 struct ChatView: View {
 	@State private var messageText: String = ""
 	@State private var messages: [String] = []
-
+	
 	var body: some View {
 		VStack {
 			List(messages, id: \.self) { message in
@@ -24,7 +24,7 @@ struct ChatView: View {
 		}
 		.navigationTitle("Chat")
 	}
-
+	
 	private func sendMessage() {
 		if !messageText.isEmpty {
 			messages.append(messageText)

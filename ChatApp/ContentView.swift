@@ -8,7 +8,8 @@
 import SwiftUI
 import Firebase
 struct ContentView: View {
-	@StateObject private var viewModel = FirebaseManager()
+//	@StateObject private var viewModel = FirebaseManager()
+	@EnvironmentObject private var viewModel: FirebaseManager
 	@State private var isLoginHere = false
 	@State private var email = ""
 	@State private var password = ""
@@ -81,11 +82,7 @@ struct ContentView: View {
 		}
 	}
 }
-struct LoggedInView: View{
-	var body: some View{
-		Text("You are logged in!")
-	}
-}
+
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {

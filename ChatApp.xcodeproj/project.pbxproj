@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B121599A2B029B660007E965 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12159992B029B660007E965 /* AppDelegate.swift */; };
+		B121599C2B02B88B0007E965 /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121599B2B02B88B0007E965 /* LoggedInView.swift */; };
 		B16261402B0020140091A587 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B162613F2B0020140091A587 /* FirebaseAnalytics */; };
 		B16261422B0020140091A587 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = B16261412B0020140091A587 /* FirebaseAnalyticsOnDeviceConversion */; };
 		B16261442B0020140091A587 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B16261432B0020140091A587 /* FirebaseAnalyticsSwift */; };
@@ -70,6 +72,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B12159992B029B660007E965 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B121599B2B02B88B0007E965 /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		B18CE9F22B016C5B00B66661 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B18D2A442AFD8CD8000C4B7B /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		B19C720F2B016549003CAA4B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				B1E960762AD8BCEC0023F9A4 /* ChatAppApp.swift */,
+				B121599B2B02B88B0007E965 /* LoggedInView.swift */,
+				B12159992B029B660007E965 /* AppDelegate.swift */,
 				B18CE9F22B016C5B00B66661 /* ChatView.swift */,
 				B19C720F2B016549003CAA4B /* Message.swift */,
 				B1E960782AD8BCEC0023F9A4 /* ContentView.swift */,
@@ -311,7 +317,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B121599A2B029B660007E965 /* AppDelegate.swift in Sources */,
 				B18D2A452AFD8CD8000C4B7B /* FirebaseManager.swift in Sources */,
+				B121599C2B02B88B0007E965 /* LoggedInView.swift in Sources */,
 				B19C72102B016549003CAA4B /* Message.swift in Sources */,
 				B18CE9F32B016C5B00B66661 /* ChatView.swift in Sources */,
 				B1E960792AD8BCEC0023F9A4 /* ContentView.swift in Sources */,
