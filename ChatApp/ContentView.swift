@@ -44,7 +44,7 @@ struct ContentView: View {
 					
 					
 					NavigationLink(
-						destination: LoggedInView(),
+						destination: ChatView(),
 						isActive: $viewModel.loggedIn,
 						label: {
 							Button {
