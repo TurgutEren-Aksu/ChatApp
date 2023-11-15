@@ -13,10 +13,31 @@ class FirebaseManager: ObservableObject {
 	@Published var loggedIn = false
 	@Published var message: [Message] = []
 	private let auth: Auth
+	private let database = Database.database().reference()
 	
 	init() {
 		//		FirebaseApp.configure()
 		self.auth = Auth.auth()
+		observeMessage()
+	}
+	private func observeMessages() {
+		database.child("messages").observe(.childAdded) { snapshot in
+			if let messageData = snapshot.value as? [String: String],
+			   let id = messageData["id"],
+			   let senderID = messageData["senderID"],
+			   let content = messageData["content"] {
+				let message = Message(id: id, senderID: senderID, content: content)
+				self.messages.append(message)
+			}
+		}
+	}
+	private func sendMessageToFirebase(message: Message) {
+		let messageData: [String: String] = [
+			"id": message.id,
+			"senderID": message.senderID,
+			"content": message.content
+		]
+		database.child("messages").child(message.id).setValue(messageData)
 	}
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in

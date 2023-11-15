@@ -27,8 +27,9 @@ struct ChatView: View {
 	
 	private func sendMessage() {
 		if !messageText.isEmpty {
-			messages.append(messageText)
-			messageText = ""
+			   let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText)
+			   viewModel.sendMessageToFirebase(message: message)
+			   messageText = ""
 		}
 	}
 }
