@@ -7,6 +7,10 @@
 
 import Foundation
 import Firebase
+import SwiftUI
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
 
 class FirebaseManager: ObservableObject {
 	@Published var loginStatusMessage = ""
@@ -18,19 +22,20 @@ class FirebaseManager: ObservableObject {
 	init() {
 		//		FirebaseApp.configure()
 		self.auth = Auth.auth()
-		observeMessage()
+		observeMessages()
 	}
-	private func observeMessages() {
-		database.child("messages").observe(.childAdded) { snapshot in
-			if let messageData = snapshot.value as? [String: String],
-			   let id = messageData["id"],
-			   let senderID = messageData["senderID"],
-			   let content = messageData["content"] {
-				let message = Message(id: id, senderID: senderID, content: content)
-				self.messages.append(message)
-			}
-		}
-	}
+	private func observeMessages() {  // Değişiklik yapıldı
+		   database.child("messages").observe(.childAdded) { snapshot in
+			   if let messageData = snapshot.value as? [String: String],
+				   let id = messageData["id"],
+				   let senderID = messageData["senderID"],
+				   let content = messageData["content"] {
+				   let message = Message(id: id, senderID: senderID, content: content)
+				   self.message.append(message)
+			   }
+		   }
+	   }
+	
 	private func sendMessageToFirebase(message: Message) {
 		let messageData: [String: String] = [
 			"id": message.id,

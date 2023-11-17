@@ -7,6 +7,11 @@
 
 import SwiftUI
 import Firebase
+import SwiftUI
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+	  
 struct ContentView: View {
 //	@StateObject private var viewModel = FirebaseManager()
 	@EnvironmentObject private var viewModel: FirebaseManager

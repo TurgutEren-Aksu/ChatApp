@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3E56AAC0A8B8C5BC2C6E42C547BDBFFE"
-               BuildableName = "Pods_ChatApp.framework"
+               BuildableName = "libPods-ChatApp.a"
                BlueprintName = "Pods-ChatApp"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
