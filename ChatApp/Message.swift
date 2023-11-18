@@ -1,4 +1,10 @@
 import Foundation
+import SwiftUI
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+// ...
+	  
 
 struct Message: Identifiable {
 	var id: String

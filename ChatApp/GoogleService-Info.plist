@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBJb-XGPoD9Ih4invVKiniSiKc-4z9ShWY</string>
+	<string>AIzaSyCaCjTx96BfDWnXvOH24dCjSmTG358YlpU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>413548537115</string>
+	<string>227383739776</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.turguterenaksu.ChatApp</string>
 	<key>PROJECT_ID</key>
-	<string>chatapp-fe270</string>
+	<string>chatappv1-4222f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>chatapp-fe270.appspot.com</string>
+	<string>chatappv1-4222f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:413548537115:ios:a14f0dec8604cd69f71fbe</string>
+	<string>1:227383739776:ios:b2c12adbbef1c56127ed65</string>
 </dict>
 </plist>

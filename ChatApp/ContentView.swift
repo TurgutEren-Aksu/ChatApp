@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  ChatApp
-//
-//  Created by Turgut Eren Aksu on 13.10.2023.
-//
-
 import SwiftUI
 import Firebase
 import SwiftUI
@@ -13,8 +6,8 @@ import FirebaseFirestore
 import FirebaseAuth
 	  
 struct ContentView: View {
-//	@StateObject private var viewModel = FirebaseManager()
-	@EnvironmentObject private var viewModel: FirebaseManager
+	@StateObject private var viewModel = FirebaseManager()
+//	@EnvironmentObject private var viewModel: FirebaseManager
 	@State private var isLoginHere = false
 	@State private var email = ""
 	@State private var password = ""

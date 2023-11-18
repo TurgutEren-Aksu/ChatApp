@@ -1,13 +1,12 @@
-//
-//  LoggedInView.swift
-//  ChatApp
-//
-//  Created by Turgut Eren Aksu on 13.11.2023.
-//
-
 import Foundation
 import SwiftUI
 import Firebase
+import SwiftUI
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+// ...
+	  
 
 struct LoggedInView: View{
 //	@StateObject private var viewModel = FirebaseManager()

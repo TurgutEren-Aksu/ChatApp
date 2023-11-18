@@ -1,21 +1,17 @@
-//
-//  FirebaseManager.swift
-//  ChatApp
-//
-//  Created by Turgut Eren Aksu on 10.11.2023.
-//
-
 import Foundation
+import FirebaseDatabaseInternal
 import Firebase
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
+// ...
+	  
 
 class FirebaseManager: ObservableObject {
 	@Published var loginStatusMessage = ""
 	@Published var loggedIn = false
-	@Published var message: [Message] = []
+	@Published var message : [Message] = []
 	private let auth: Auth
 	private let database = Database.database().reference()
 	
@@ -36,13 +32,19 @@ class FirebaseManager: ObservableObject {
 		   }
 	   }
 	
-	private func sendMessageToFirebase(message: Message) {
+	func sendMessageToFirebase(message: Message) {
 		let messageData: [String: String] = [
 			"id": message.id,
 			"senderID": message.senderID,
 			"content": message.content
 		]
-		database.child("messages").child(message.id).setValue(messageData)
+		database.child("messages").child(message.id).setValue(messageData) { error, _ in
+			   if let error = error {
+				   print("Error sending message: \(error)")
+			   } else {
+				   print("Message sent successfully!")
+			   }
+		   }
 	}
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in
