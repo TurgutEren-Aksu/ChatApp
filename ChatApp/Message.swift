@@ -6,9 +6,8 @@ import FirebaseAuth
 // ...
 	  
 
-struct Message: Identifiable {
+struct Message: Identifiable, Hashable {
 	var id: String
 	var senderID: String
 	var content: String
-	
 }

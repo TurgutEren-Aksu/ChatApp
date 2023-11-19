@@ -9,12 +9,12 @@ import FirebaseAuth
 struct ChatView: View {
 	@EnvironmentObject private var viewModel: FirebaseManager
 	@State private var messageText: String = ""
-	@State private var message: [String] = []
+	// @State private var message: [String] = []
 	
 	var body: some View {
 		VStack {
-			List(message, id: \.self) { message in
-				Text(message)
+			List(viewModel.message, id: \.self) { message in
+				Text(message.content)
 			}
 			
 			HStack {
