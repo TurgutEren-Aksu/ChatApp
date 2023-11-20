@@ -3,8 +3,6 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-// ...
-	  
 
 struct ChatView: View {
 	@EnvironmentObject private var viewModel: FirebaseManager
@@ -15,6 +13,11 @@ struct ChatView: View {
 		VStack {
 			List(viewModel.message, id: \.self) { message in
 				Text(message.content)
+					.padding(10)
+					.background(message.isCurrentUser ? Color.blue : Color.gray)
+					.foregroundColor(.white)
+					.cornerRadius(10)
+					.frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
 			}
 			
 			HStack {
@@ -33,12 +36,13 @@ struct ChatView: View {
 	
 	private func sendMessage() {
 		if !messageText.isEmpty {
-			let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText)
+			let isCurrentUser = true
+			let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser)
 			viewModel.sendMessageToFirebase(message: message)
 			messageText = ""
 		}
 	}
-
+	
 }
 
 struct ChatView_Previews: PreviewProvider {

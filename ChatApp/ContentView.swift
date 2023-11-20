@@ -4,10 +4,9 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-	  
+
 struct ContentView: View {
 	@StateObject private var viewModel = FirebaseManager()
-//	@EnvironmentObject private var viewModel: FirebaseManager
 	@State private var isLoginHere = false
 	@State private var email = ""
 	@State private var password = ""

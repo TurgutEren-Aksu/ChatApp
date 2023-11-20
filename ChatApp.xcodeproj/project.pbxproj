@@ -12,7 +12,7 @@
 		B1941B012B08FCD000571760 /* ChatAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B002B08FCD000571760 /* ChatAppApp.swift */; };
 		B1941B032B08FCD000571760 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B022B08FCD000571760 /* ContentView.swift */; };
 		B1941B0F2B08FD0000571760 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B0E2B08FD0000571760 /* FirebaseManager.swift */; };
-		B1941B112B08FD2100571760 /*  ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B102B08FD2100571760 /*  ChatView.swift */; };
+		B1941B112B08FD2100571760 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B102B08FD2100571760 /* ChatView.swift */; };
 		B1941B132B08FD9B00571760 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B122B08FD9B00571760 /* Message.swift */; };
 		B1941B152B08FDEB00571760 /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B142B08FDEB00571760 /* LoggedInView.swift */; };
 		B1941B172B08FE0600571760 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1941B162B08FE0600571760 /* AppDelegate.swift */; };
@@ -52,7 +52,7 @@
 		B1941B002B08FCD000571760 /* ChatAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppApp.swift; sourceTree = "<group>"; };
 		B1941B022B08FCD000571760 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B1941B0E2B08FD0000571760 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		B1941B102B08FD2100571760 /*  ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " ChatView.swift"; sourceTree = "<group>"; };
+		B1941B102B08FD2100571760 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B1941B122B08FD9B00571760 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B1941B142B08FDEB00571760 /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		B1941B162B08FE0600571760 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 				B1941B162B08FE0600571760 /* AppDelegate.swift */,
 				B1941B142B08FDEB00571760 /* LoggedInView.swift */,
 				B1941B122B08FD9B00571760 /* Message.swift */,
-				B1941B102B08FD2100571760 /*  ChatView.swift */,
+				B1941B102B08FD2100571760 /* ChatView.swift */,
 				B1941B022B08FCD000571760 /* ContentView.swift */,
 				B1941B0E2B08FD0000571760 /* FirebaseManager.swift */,
 				B109ECE02B0912A60060E527 /* Assets.xcassets */,
@@ -232,7 +232,7 @@
 			files = (
 				B1941B0F2B08FD0000571760 /* FirebaseManager.swift in Sources */,
 				B1941B152B08FDEB00571760 /* LoggedInView.swift in Sources */,
-				B1941B112B08FD2100571760 /*  ChatView.swift in Sources */,
+				B1941B112B08FD2100571760 /* ChatView.swift in Sources */,
 				B1941B132B08FD9B00571760 /* Message.swift in Sources */,
 				B1941B172B08FE0600571760 /* AppDelegate.swift in Sources */,
 				B1941B032B08FCD000571760 /* ContentView.swift in Sources */,

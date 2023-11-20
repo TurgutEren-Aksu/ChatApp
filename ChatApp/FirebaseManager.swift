@@ -5,8 +5,6 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-// ...
-	  
 
 class FirebaseManager: ObservableObject {
 	@Published var loginStatusMessage = ""
@@ -16,21 +14,22 @@ class FirebaseManager: ObservableObject {
 	private let database = Database.database().reference()
 	
 	init() {
-		//		FirebaseApp.configure()
 		self.auth = Auth.auth()
 		observeMessages()
 	}
-	private func observeMessages() {  // Değişiklik yapıldı
-		   database.child("messages").observe(.childAdded) { snapshot in
-			   if let messageData = snapshot.value as? [String: String],
-				   let id = messageData["id"],
-				   let senderID = messageData["senderID"],
-				   let content = messageData["content"] {
-				   let message = Message(id: id, senderID: senderID, content: content)
-				   self.message.append(message)
-			   }
-		   }
-	   }
+	private func observeMessages() {
+		database.child("messages").observe(.childAdded) { snapshot, _ in
+			if let messageData = snapshot.value as? [String: String],
+			   let id = messageData["id"],
+			   let senderID = messageData["senderID"],
+			   let content = messageData["content"] {
+				
+				let isCurrentUser = senderID == Auth.auth().currentUser?.uid
+				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser)
+				self.message.append(message)
+			}
+		}
+	}
 	
 	func sendMessageToFirebase(message: Message) {
 		let messageData: [String: String] = [
@@ -39,12 +38,12 @@ class FirebaseManager: ObservableObject {
 			"content": message.content
 		]
 		database.child("messages").child(message.id).setValue(messageData) { error, _ in
-			   if let error = error {
-				   print("Error sending message: \(error)")
-			   } else {
-				   print("Message sent successfully!")
-			   }
-		   }
+			if let error = error {
+				print("Error sending message: \(error)")
+			} else {
+				print("Message sent successfully!")
+			}
+		}
 	}
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in
