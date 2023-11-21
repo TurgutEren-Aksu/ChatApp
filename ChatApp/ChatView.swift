@@ -7,17 +7,18 @@ import FirebaseAuth
 struct ChatView: View {
 	@EnvironmentObject private var viewModel: FirebaseManager
 	@State private var messageText: String = ""
-	// @State private var message: [String] = []
 	
 	var body: some View {
 		VStack {
 			List(viewModel.message, id: \.self) { message in
-				Text(message.content)
-					.padding(10)
-					.background(message.isCurrentUser ? Color.blue : Color.gray)
-					.foregroundColor(.white)
-					.cornerRadius(10)
-					.frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
+				VStack(alignment: message.isCurrentUser ? .trailing: .leading){
+					Text("\(message.senderUsername): \(message.content)")
+						.padding(10)
+						.background(message.isCurrentUser ? Color.blue : Color.gray)
+						.foregroundColor(.white)
+						.cornerRadius(10)
+						.frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
+				}
 			}
 			
 			HStack {
@@ -37,8 +38,8 @@ struct ChatView: View {
 	private func sendMessage() {
 		if !messageText.isEmpty {
 			let isCurrentUser = true
-			let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser)
-			viewModel.sendMessageToFirebase(message: message)
+			let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername)
+			viewModel.sendMessageToFirebase(message: message, senderUsername: viewModel.senderUsername)
 			messageText = ""
 		}
 	}

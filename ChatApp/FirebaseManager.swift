@@ -12,6 +12,7 @@ class FirebaseManager: ObservableObject {
 	@Published var message : [Message] = []
 	private let auth: Auth
 	private let database = Database.database().reference()
+	@Published var senderUsername: String = ""
 	
 	init() {
 		self.auth = Auth.auth()
@@ -22,20 +23,22 @@ class FirebaseManager: ObservableObject {
 			if let messageData = snapshot.value as? [String: String],
 			   let id = messageData["id"],
 			   let senderID = messageData["senderID"],
-			   let content = messageData["content"] {
+			   let content = messageData["content"],
+			   let senderUsername = messageData["senderUsername"]{
 				
 				let isCurrentUser = senderID == Auth.auth().currentUser?.uid
-				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser)
+				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername)
 				self.message.append(message)
 			}
 		}
 	}
 	
-	func sendMessageToFirebase(message: Message) {
+	func sendMessageToFirebase(message: Message, senderUsername: String) {
 		let messageData: [String: String] = [
 			"id": message.id,
 			"senderID": message.senderID,
-			"content": message.content
+			"content": message.content,
+			"senderUsername": senderUsername
 		]
 		database.child("messages").child(message.id).setValue(messageData) { error, _ in
 			if let error = error {
