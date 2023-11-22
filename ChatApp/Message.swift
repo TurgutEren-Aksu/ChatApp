@@ -9,12 +9,14 @@ struct Message: Identifiable, Hashable {
 	var content: String
 	var isCurrentUser: Bool
 	var senderUsername: String
+	var senderEmail: String
 	
-	init(id: String, senderID: String, content: String, isCurrentUser: Bool, senderUsername: String) {
+	init(id: String, senderID: String, content: String, isCurrentUser: Bool, senderUsername: String, senderEmail: String) {
 		self.id = id
 		self.senderID = senderID
 		self.content = content
 		self.isCurrentUser = isCurrentUser
 		self.senderUsername = senderUsername
+		self.senderEmail = senderEmail
 	}
 }

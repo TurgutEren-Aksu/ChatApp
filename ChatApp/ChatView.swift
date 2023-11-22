@@ -12,7 +12,7 @@ struct ChatView: View {
 		VStack {
 			List(viewModel.message, id: \.self) { message in
 				VStack(alignment: message.isCurrentUser ? .trailing: .leading){
-					Text("\(message.senderUsername): \(message.content)")
+					Text("\(viewModel.usernameFromEmail(email: message.senderEmail)): \(message.content)")
 						.padding(10)
 						.background(message.isCurrentUser ? Color.blue : Color.gray)
 						.foregroundColor(.white)
@@ -38,8 +38,10 @@ struct ChatView: View {
 	private func sendMessage() {
 		if !messageText.isEmpty {
 			let isCurrentUser = true
-			let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername)
-			viewModel.sendMessageToFirebase(message: message, senderUsername: viewModel.senderUsername)
+			if let currentUser = Auth.auth().currentUser{
+				let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "")
+				viewModel.sendMessageToFirebase(message: message, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "")
+			}
 			messageText = ""
 		}
 	}

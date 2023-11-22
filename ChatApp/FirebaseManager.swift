@@ -24,21 +24,23 @@ class FirebaseManager: ObservableObject {
 			   let id = messageData["id"],
 			   let senderID = messageData["senderID"],
 			   let content = messageData["content"],
-			   let senderUsername = messageData["senderUsername"]{
+			   let senderUsername = messageData["senderUsername"],
+			   let senderEmail = messageData["senderEmail"]{
 				
 				let isCurrentUser = senderID == Auth.auth().currentUser?.uid
-				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername)
+				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername, senderEmail: senderEmail)
 				self.message.append(message)
 			}
 		}
 	}
 	
-	func sendMessageToFirebase(message: Message, senderUsername: String) {
+	func sendMessageToFirebase(message: Message, senderUsername: String, senderEmail: String) {
 		let messageData: [String: String] = [
 			"id": message.id,
 			"senderID": message.senderID,
 			"content": message.content,
-			"senderUsername": senderUsername
+			"senderUsername": senderUsername,
+			"senderEmail": senderEmail
 		]
 		database.child("messages").child(message.id).setValue(messageData) { error, _ in
 			if let error = error {
@@ -76,6 +78,12 @@ class FirebaseManager: ObservableObject {
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
 	}
+	func usernameFromEmail(email: String) -> String {
+		 guard let atIndex = email.firstIndex(of: "@") else {
+			 return email
+		 }
+		 return String(email.prefix(upTo: atIndex))
+	 }
 	func fetchMessages(){
 		
 	}
