@@ -20,27 +20,30 @@ class FirebaseManager: ObservableObject {
 	}
 	private func observeMessages() {
 		database.child("messages").observe(.childAdded) { snapshot, _ in
-			if let messageData = snapshot.value as? [String: String],
-			   let id = messageData["id"],
-			   let senderID = messageData["senderID"],
-			   let content = messageData["content"],
-			   let senderUsername = messageData["senderUsername"],
-			   let senderEmail = messageData["senderEmail"]{
+			if let messageData = snapshot.value as? [String: Any],
+			   let id = messageData["id"] as? String,
+			   let senderID = messageData["senderID"] as? String,
+			   let content = messageData["content"] as? String,
+			   let senderUsername = messageData["senderUsername"] as? String,
+			   let senderEmail = messageData["senderEmail"] as? String,
+			   let timestampString = messageData["timestamp"] as? String,
+			   let timestamp = Double(timestampString){
 				
 				let isCurrentUser = senderID == Auth.auth().currentUser?.uid
-				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername, senderEmail: senderEmail)
+				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername, senderEmail: senderEmail,timestamp: Date(timeIntervalSince1970: timestamp))
 				self.message.append(message)
 			}
 		}
 	}
 	
 	func sendMessageToFirebase(message: Message, senderUsername: String, senderEmail: String) {
-		let messageData: [String: String] = [
+		let messageData: [String: Any] = [
 			"id": message.id,
 			"senderID": message.senderID,
 			"content": message.content,
 			"senderUsername": senderUsername,
-			"senderEmail": senderEmail
+			"senderEmail": senderEmail,
+			"timestamp": String(message.timestamp.timeIntervalSince1970)
 		]
 		database.child("messages").child(message.id).setValue(messageData) { error, _ in
 			if let error = error {

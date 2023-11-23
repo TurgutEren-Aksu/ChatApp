@@ -10,13 +10,15 @@ struct Message: Identifiable, Hashable {
 	var isCurrentUser: Bool
 	var senderUsername: String
 	var senderEmail: String
+	var timestamp: Date
 	
-	init(id: String, senderID: String, content: String, isCurrentUser: Bool, senderUsername: String, senderEmail: String) {
+	init(id: String, senderID: String, content: String, isCurrentUser: Bool, senderUsername: String, senderEmail: String, timestamp: Date) {
 		self.id = id
 		self.senderID = senderID
 		self.content = content
 		self.isCurrentUser = isCurrentUser
 		self.senderUsername = senderUsername
 		self.senderEmail = senderEmail
+		self.timestamp = timestamp
 	}
 }

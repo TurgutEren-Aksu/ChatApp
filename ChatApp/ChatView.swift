@@ -18,6 +18,9 @@ struct ChatView: View {
 						.foregroundColor(.white)
 						.cornerRadius(10)
 						.frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
+					Text("\(message.timestamp, formatter: yourDateFormatter)")
+						.font(.caption)
+						.foregroundColor(.gray)
 				}
 			}
 			
@@ -39,13 +42,19 @@ struct ChatView: View {
 		if !messageText.isEmpty {
 			let isCurrentUser = true
 			if let currentUser = Auth.auth().currentUser{
-				let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "")
+				let timestamp = Date()
+				let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "", timestamp: timestamp)
 				viewModel.sendMessageToFirebase(message: message, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "")
 			}
 			messageText = ""
 		}
 	}
-	
+	let yourDateFormatter: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.dateStyle = .short
+		formatter.timeStyle = .short
+		return formatter
+	}()
 }
 
 struct ChatView_Previews: PreviewProvider {
