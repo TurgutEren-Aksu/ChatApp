@@ -90,4 +90,17 @@ class FirebaseManager: ObservableObject {
 	func fetchMessages(){
 		
 	}
+	func updateUserLastSeen() {
+		if let currentUser = Auth.auth().currentUser {
+			let database = Database.database().reference().child("users").child(currentUser.uid)
+			let timestamp = ServerValue.timestamp()
+			database.updateChildValues(["lastSeen": timestamp]) {error, _ in
+				if let error = error {
+					print("Hata oluştu: \(error.localizedDescription)")
+				}else{
+					print("Son Görülme Bilgisi Güncellendi")
+				}
+			}
+		}
+	}
 }

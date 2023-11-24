@@ -29,10 +29,15 @@ struct ChatView: View {
 					.textFieldStyle(RoundedBorderTextFieldStyle())
 					.padding(.horizontal)
 				
+				
 				Button("Send") {
 					sendMessage()
+					viewModel.updateUserLastSeen()
 				}
 				.padding(.trailing)
+			}
+			.onAppear{
+				viewModel.updateUserLastSeen()
 			}
 		}
 		.navigationTitle("Chat")

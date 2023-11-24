@@ -46,6 +46,7 @@ struct ContentView: View {
 						label: {
 							Button {
 								handleAction()
+								viewModel.updateUserLastSeen()
 							} label: {
 								HStack {
 									Spacer()
