@@ -13,6 +13,7 @@ class FirebaseManager: ObservableObject {
 	private let auth: Auth
 	private let database = Database.database().reference()
 	@Published var senderUsername: String = ""
+	@Published var lastSeen: Date?
 	
 	init() {
 		self.auth = Auth.auth()
@@ -99,8 +100,16 @@ class FirebaseManager: ObservableObject {
 					print("Hata oluştu: \(error.localizedDescription)")
 				}else{
 					print("Son Görülme Bilgisi Güncellendi")
+					self.lastSeen = Date()
 				}
 			}
+			lastSeen = Date()
 		}
 	}
+	let yourDateFormatter: DateFormatter = {
+		let formatter = DateFormatter()
+		formatter.dateStyle = .short
+		formatter.timeStyle = .short
+		return formatter
+	}()
 }

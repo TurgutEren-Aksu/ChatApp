@@ -39,6 +39,11 @@ struct ChatView: View {
 			.onAppear{
 				viewModel.updateUserLastSeen()
 			}
+			if let lastSeen = viewModel.lastSeen {
+				Text("Son Görülme: \(viewModel.yourDateFormatter.string(from: lastSeen))")
+					.font(.caption)
+					.foregroundColor(.gray)
+			}
 		}
 		.navigationTitle("Chat")
 	}
