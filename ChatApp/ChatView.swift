@@ -10,6 +10,21 @@ struct ChatView: View {
 	
 	var body: some View {
 		VStack {
+			HStack{
+//				Text("Chat")
+//					.font(.largeTitle)
+//					.fontWeight(.bold)
+//				
+				Spacer()
+				
+				if let lastSeen = viewModel.lastSeen {
+					Text("Son Görülme: \(viewModel.yourDateFormatter.string(from: lastSeen))")
+						.font(.caption)
+						.foregroundColor(.gray)
+				}
+				Spacer()
+				
+			}
 			List(viewModel.message, id: \.self) { message in
 				VStack(alignment: message.isCurrentUser ? .trailing: .leading){
 					Text("\(viewModel.usernameFromEmail(email: message.senderEmail)): \(message.content)")
@@ -36,15 +51,9 @@ struct ChatView: View {
 				}
 				.padding(.trailing)
 			}
-			.onAppear{
-				viewModel.updateUserLastSeen()
-			}
-			if let lastSeen = viewModel.lastSeen {
-				Text("Son Görülme: \(viewModel.yourDateFormatter.string(from: lastSeen))")
-					.font(.caption)
-					.foregroundColor(.gray)
-			}
+			.onAppear()
 		}
+		
 		.navigationTitle("Chat")
 	}
 	
