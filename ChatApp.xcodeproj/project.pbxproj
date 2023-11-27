@@ -44,6 +44,7 @@
 		B1941B4A2B08FF2000571760 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B492B08FF2000571760 /* FirebaseRemoteConfigSwift */; };
 		B1941B4C2B08FF2000571760 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B4B2B08FF2000571760 /* FirebaseStorage */; };
 		B1941B4E2B08FF2000571760 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B4D2B08FF2000571760 /* FirebaseStorageCombine-Community */; };
+		B1D496AB2B148CCF00C416C4 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D496AA2B148CCF00C416C4 /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B1941B122B08FD9B00571760 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B1941B142B08FDEB00571760 /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		B1941B162B08FE0600571760 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B1D496AA2B148CCF00C416C4 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			children = (
 				B1941B002B08FCD000571760 /* ChatAppApp.swift */,
 				B1941B162B08FE0600571760 /* AppDelegate.swift */,
+				B1D496AA2B148CCF00C416C4 /* MessageView.swift */,
 				B1941B142B08FDEB00571760 /* LoggedInView.swift */,
 				B1941B122B08FD9B00571760 /* Message.swift */,
 				B1941B102B08FD2100571760 /* ChatView.swift */,
@@ -236,6 +239,7 @@
 				B1941B0F2B08FD0000571760 /* FirebaseManager.swift in Sources */,
 				B1941B152B08FDEB00571760 /* LoggedInView.swift in Sources */,
 				B1941B112B08FD2100571760 /* ChatView.swift in Sources */,
+				B1D496AB2B148CCF00C416C4 /* MessageView.swift in Sources */,
 				B1941B132B08FD9B00571760 /* Message.swift in Sources */,
 				B12D3F2E2B11255C00D9FD13 /* User.swift in Sources */,
 				B1941B172B08FE0600571760 /* AppDelegate.swift in Sources */,
