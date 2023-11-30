@@ -14,6 +14,7 @@ class FirebaseManager: ObservableObject {
 	private let database = Database.database().reference()
 	@Published var senderUsername: String = ""
 	@Published var lastSeen: Date?
+	@Published var shouldNavigateToMessageView = false
 	
 	init() {
 		self.auth = Auth.auth()
@@ -81,6 +82,7 @@ class FirebaseManager: ObservableObject {
 		print("\(message) \(userID ?? "")")
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
+		self.shouldNavigateToMessageView = true
 	}
 	func usernameFromEmail(email: String) -> String {
 		 guard let atIndex = email.firstIndex(of: "@") else {

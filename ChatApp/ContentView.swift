@@ -18,14 +18,15 @@ struct ContentView: View {
 					Picker(selection: $isLoginHere, label: Text("Picker Here")) {
 						Text("Login").tag(true)
 						Text("Create Account").tag(false)
+						
 					}
 					.pickerStyle(SegmentedPickerStyle())
 					.padding()
 					
 					if !isLoginHere {
-						Image(systemName: "person.fill")
-							.font(.system(size: 64))
-							.padding()
+//						Image(systemName: "person.fill")
+//							.font(.system(size: 64))
+//							.padding()
 					}
 					
 					Group {
@@ -41,12 +42,12 @@ struct ContentView: View {
 					
 					
 					NavigationLink(
-						destination: ChatView(),
-						isActive: $viewModel.loggedIn,
+						destination: MessageView(),
+						isActive: $viewModel.shouldNavigateToMessageView,
 						label: {
 							Button {
 								handleAction()
-								viewModel.updateUserLastSeen()
+//								viewModel.updateUserLastSeen()
 							} label: {
 								HStack {
 									Spacer()
