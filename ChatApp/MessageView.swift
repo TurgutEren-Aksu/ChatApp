@@ -58,6 +58,7 @@ struct MessageView: View {
 			.overlay(
 				newMessageButton, alignment: .bottom)
 			.navigationBarHidden(true)
+			.navigationBarBackButtonHidden()
 		}
 	}
 	private var messageView: some View{
