@@ -6,9 +6,33 @@
 //
 
 import SwiftUI
-
-struct MessageView: View {
+class MainMessageViewModel: ObservableObject{
 	
+	@Published var errorMessage = ""
+	
+	init(){
+		fetchCurrentUser()
+	}
+	private func fetchCurrentUser(){
+		
+		guard let uid =
+		FirebaseManager.shared.auth.currentUser?.uid else {return}
+		
+		self.errorMessage = "\(uid)"
+		
+		FirebaseManager.shared.firestore.collection("users")
+			.document(uid).getDocument{ snapshot, error in
+				if let error = error{
+					print("Failed to fetch user:",error)
+					return
+				}
+				guard let data = snapshot?.data() else {return}
+				print(data)
+			}
+	}
+}
+struct MessageView: View {
+	@ObservedObject var mv = MainMessageViewModel()
 	@State var options = false
 	private var customNavBar: some View {
 		HStack(spacing: 16){
@@ -52,6 +76,7 @@ struct MessageView: View {
 	var body: some View {
 		NavigationView{
 			VStack{
+				Text("Current User ID:\(mv.errorMessage)")
 				customNavBar
 				messageView
 			}

@@ -5,19 +5,22 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 class FirebaseManager: ObservableObject {
+	static let shared = FirebaseManager()
 	@Published var loginStatusMessage = ""
 	@Published var loggedIn = false
 	@Published var message : [Message] = []
-	private let auth: Auth
-	private let database = Database.database().reference()
+	let auth = Auth.auth()
+	let storage = Storage.storage()
+	let database = Database.database().reference()
 	@Published var senderUsername: String = ""
 	@Published var lastSeen: Date?
 	@Published var shouldNavigateToMessageView = false
+	let firestore = Firestore.firestore()
 	
 	init() {
-		self.auth = Auth.auth()
 		observeMessages()
 	}
 	private func observeMessages() {
@@ -83,13 +86,32 @@ class FirebaseManager: ObservableObject {
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
 		self.shouldNavigateToMessageView = true
+		let collectionRef = firestore.collection("collectionName")
+		
+		// Replace "documentId" with the desired document ID or let Firestore auto-generate it
+		let documentRef = collectionRef.document(userID!)
+		
+		// Replace "fieldValue" and "anotherFieldValue" with your data
+		let data: [String: Any] = [
+			"fieldName": "fieldValue",
+			"anotherFieldName": "anotherFieldValue"
+		]
+		
+		// Add the data to Firestore
+		documentRef.setData(data) { error in
+			if let error = error {
+				print("Error adding document: \(error)")
+			} else {
+				print("Document added successfully!")
+			}
+		}
 	}
 	func usernameFromEmail(email: String) -> String {
-		 guard let atIndex = email.firstIndex(of: "@") else {
-			 return email
-		 }
-		 return String(email.prefix(upTo: atIndex))
-	 }
+		guard let atIndex = email.firstIndex(of: "@") else {
+			return email
+		}
+		return String(email.prefix(upTo: atIndex))
+	}
 	func fetchMessages(){
 		
 	}
