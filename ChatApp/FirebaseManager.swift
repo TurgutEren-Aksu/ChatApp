@@ -64,7 +64,7 @@ class FirebaseManager: ObservableObject {
 				self.handleAuthError(error: error)
 				return
 			}
-			self.handleSuccess(message: "Giriş işlemi başarılı", userID: result?.user.uid)
+			self.handleSuccess(message: "Giriş işlemi başarılı", userID: result?.user.uid, email: result?.user.email ?? "")
 		}
 	}
 	
@@ -74,14 +74,14 @@ class FirebaseManager: ObservableObject {
 				self.handleAuthError(error: error)
 				return
 			}
-			self.handleSuccess(message: "Kullanıcı oluşturma başarılı", userID: result?.user.uid)
+			self.handleSuccess(message: "Kullanıcı oluşturma başarılı", userID: result?.user.uid, email: result?.user.email ?? "")
 		}
 	}
 	private func handleAuthError(error: Error){
 		self.loginStatusMessage = "Hata: \(error.localizedDescription)"
 		self.loggedIn = false
 	}
-	private func handleSuccess(message:String, userID:String?){
+	private func handleSuccess(message:String, userID:String?,email: String){
 		print("\(message) \(userID ?? "")")
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
@@ -93,8 +93,8 @@ class FirebaseManager: ObservableObject {
 		
 		// Replace "fieldValue" and "anotherFieldValue" with your data
 		let data: [String: Any] = [
-			"fieldName": "fieldValue",
-			"anotherFieldName": "anotherFieldValue"
+			"UserID": "\(email)",
+			"anotherFieldName": "\(userID!)"
 		]
 		
 		// Add the data to Firestore
@@ -105,6 +105,7 @@ class FirebaseManager: ObservableObject {
 				print("Document added successfully!")
 			}
 		}
+		
 	}
 	func usernameFromEmail(email: String) -> String {
 		guard let atIndex = email.firstIndex(of: "@") else {

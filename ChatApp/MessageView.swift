@@ -6,29 +6,47 @@
 //
 
 import SwiftUI
+struct ChatUser {
+	let uid,email:String
+}
 class MainMessageViewModel: ObservableObject{
 	
 	@Published var errorMessage = ""
+	@Published var chatUser: ChatUser?
 	
 	init(){
 		fetchCurrentUser()
 	}
 	private func fetchCurrentUser(){
-		
-		guard let uid =
-		FirebaseManager.shared.auth.currentUser?.uid else {return}
-		
+//		self.errorMessage = "Fetching current user"
+		guard let uid = FirebaseManager.shared.auth.currentUser?.uid
+		else {
+			self.errorMessage = "Could not find firebase uid"
+			return
+		}
 		self.errorMessage = "\(uid)"
-		
 		FirebaseManager.shared.firestore.collection("users")
-			.document(uid).getDocument{ snapshot, error in
+			.document(uid).getDocument { snapshot, error in
 				if let error = error{
+					self.errorMessage = "Failed to fetch current user \(error)"
 					print("Failed to fetch user:",error)
 					return
 				}
-				guard let data = snapshot?.data() else {return}
-				print(data)
+//				self.errorMessage = "123"
+				guard let data = snapshot?.data() else {
+					self.errorMessage = "No data found."
+					return
+				}
+//				print(data)
+//				self.errorMessage = "\(data.description)"
+				let uid = data["uid"] as? String ?? ""
+				let email = data["email"] as? String ?? ""
+				self.chatUser = ChatUser(uid: uid, email: email)
+				
+//				self.errorMessage = chatUser.uid
+				
 			}
+
 	}
 }
 struct MessageView: View {
@@ -39,7 +57,7 @@ struct MessageView: View {
 			Image(systemName:"person.fill")
 				.font(.system(size:34, weight: .heavy))
 			VStack(alignment: .leading, spacing: 4){
-				Text("USERNAME")
+				Text("\(mv.chatUser?.email ?? "")")
 					.font(.system(size:24,weight: .bold))
 				HStack{
 					Circle()
@@ -76,7 +94,7 @@ struct MessageView: View {
 	var body: some View {
 		NavigationView{
 			VStack{
-				Text("Current User ID:\(mv.errorMessage)")
+//				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
 			}
