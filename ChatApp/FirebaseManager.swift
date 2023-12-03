@@ -81,7 +81,7 @@ class FirebaseManager: ObservableObject {
 		self.loginStatusMessage = "Hata: \(error.localizedDescription)"
 		self.loggedIn = false
 	}
-	private func handleSuccess(message:String, userID:String?,email: String){
+	func handleSuccess(message:String, userID:String?,email: String){
 		print("\(message) \(userID ?? "")")
 		self.loginStatusMessage = "\(message) \(userID ?? "")"
 		self.loggedIn = true
@@ -93,8 +93,8 @@ class FirebaseManager: ObservableObject {
 		
 		// Replace "fieldValue" and "anotherFieldValue" with your data
 		let data: [String: Any] = [
-			"UserID": "\(email)",
-			"anotherFieldName": "\(userID!)"
+			"uid": "\(userID!)",
+			"email": "\(email)"
 		]
 		
 		// Add the data to Firestore

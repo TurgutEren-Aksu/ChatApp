@@ -25,7 +25,7 @@ class MainMessageViewModel: ObservableObject{
 			return
 		}
 		self.errorMessage = "\(uid)"
-		FirebaseManager.shared.firestore.collection("users")
+		FirebaseManager.shared.firestore.collection("collectionName")
 			.document(uid).getDocument { snapshot, error in
 				if let error = error{
 					self.errorMessage = "Failed to fetch current user \(error)"
@@ -57,7 +57,7 @@ struct MessageView: View {
 			Image(systemName:"person.fill")
 				.font(.system(size:34, weight: .heavy))
 			VStack(alignment: .leading, spacing: 4){
-				Text("\(mv.chatUser?.email ?? "")")
+				Text("\(mv.chatUser?.email.replacingOccurrences(of: "@gmail.com", with: "") ?? "")")
 					.font(.system(size:24,weight: .bold))
 				HStack{
 					Circle()
@@ -94,7 +94,7 @@ struct MessageView: View {
 	var body: some View {
 		NavigationView{
 			VStack{
-//				Text("User:\(mv.chatUser?.uid ?? "")")
+				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
 			}
