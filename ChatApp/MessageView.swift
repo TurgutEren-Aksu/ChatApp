@@ -13,11 +13,17 @@ class MainMessageViewModel: ObservableObject{
 	
 	@Published var errorMessage = ""
 	@Published var chatUser: ChatUser?
+	@Published var isUserCurrentlyLoggedIn = false
 	
 	init(){
+		DispatchQueue.main.async {
+			self.isUserCurrentlyLoggedIn =
+			FirebaseManager.shared.auth.currentUser?.uid == nil
+		}
+		
 		fetchCurrentUser()
 	}
-	private func fetchCurrentUser(){
+	func fetchCurrentUser(){
 //		self.errorMessage = "Fetching current user"
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid
 		else {
@@ -47,6 +53,11 @@ class MainMessageViewModel: ObservableObject{
 				
 			}
 
+	}
+	
+	func handleSignOut() {
+		isUserCurrentlyLoggedIn.toggle()
+		try? FirebaseManager.shared.auth.signOut()
 	}
 }
 struct MessageView: View {
@@ -84,17 +95,24 @@ struct MessageView: View {
 				  buttons: [
 					.destructive(Text("Sign Out"), action: {
 						print("handle sign out ")
+						mv.handleSignOut()
 					}),
 					.cancel()
 					
 				  ])
+		}
+		.fullScreenCover(isPresented: $mv.isUserCurrentlyLoggedIn, onDismiss: nil) {
+			ContentView(didComplereLoginProcess: {
+				self.mv.isUserCurrentlyLoggedIn = false
+				self.mv.fetchCurrentUser()
+			})
 		}
 	}
 	
 	var body: some View {
 		NavigationView{
 			VStack{
-				Text("User:\(mv.chatUser?.uid ?? "")")
+//				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
 			}

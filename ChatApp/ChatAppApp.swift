@@ -10,7 +10,9 @@ struct ChatAppApp: App {
 	var body: some Scene {
 		WindowGroup {
 			NavigationView{
-				ContentView()
+				ContentView(didComplereLoginProcess: {
+					
+				})
 					.environmentObject(viewModel)
 			}
 		}

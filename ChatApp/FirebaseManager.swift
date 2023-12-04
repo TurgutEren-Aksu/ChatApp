@@ -8,6 +8,9 @@ import FirebaseAuth
 import FirebaseStorage
 
 class FirebaseManager: ObservableObject {
+	var contentV = ContentView(didComplereLoginProcess: {
+		
+	})
 	static let shared = FirebaseManager()
 	@Published var loginStatusMessage = ""
 	@Published var loggedIn = false
@@ -65,6 +68,7 @@ class FirebaseManager: ObservableObject {
 				return
 			}
 			self.handleSuccess(message: "Giriş işlemi başarılı", userID: result?.user.uid, email: result?.user.email ?? "")
+			self.contentV.didComplereLoginProcess()
 		}
 	}
 	

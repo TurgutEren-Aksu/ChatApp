@@ -6,6 +6,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct ContentView: View {
+	let didComplereLoginProcess: () -> ()
 	@StateObject private var viewModel = FirebaseManager()
 	@State private var isLoginHere = false
 	@State private var email = ""
@@ -85,6 +86,8 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
-		ContentView()
+		ContentView(didComplereLoginProcess: {
+			
+		})
 	}
 }
