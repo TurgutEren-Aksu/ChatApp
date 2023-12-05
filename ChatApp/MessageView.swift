@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-struct ChatUser {
-	let uid,email:String
-}
+
 class MainMessageViewModel: ObservableObject{
 	
 	@Published var errorMessage = ""
 	@Published var chatUser: ChatUser?
 	@Published var isUserCurrentlyLoggedIn = false
+	
 	
 	init(){
 		DispatchQueue.main.async {
@@ -45,9 +44,8 @@ class MainMessageViewModel: ObservableObject{
 				}
 //				print(data)
 //				self.errorMessage = "\(data.description)"
-				let uid = data["uid"] as? String ?? ""
-				let email = data["email"] as? String ?? ""
-				self.chatUser = ChatUser(uid: uid, email: email)
+				
+				self.chatUser = .init(data: data)
 				
 //				self.errorMessage = chatUser.uid
 				
@@ -63,6 +61,7 @@ class MainMessageViewModel: ObservableObject{
 struct MessageView: View {
 	@ObservedObject var mv = MainMessageViewModel()
 	@State var options = false
+	@State var shouldNewMessageButton = false
 	private var customNavBar: some View {
 		HStack(spacing: 16){
 			Image(systemName:"person.fill")
@@ -151,7 +150,7 @@ struct MessageView: View {
 	}
 	private var newMessageButton: some View {
 		Button{
-			
+			shouldNewMessageButton.toggle()
 		} label: {
 			HStack{
 				Spacer()
@@ -164,6 +163,9 @@ struct MessageView: View {
 			.cornerRadius(32)
 			.padding(.horizontal)
 			.shadow(radius: 15)
+		}
+		.fullScreenCover(isPresented: $shouldNewMessageButton) {
+			CreatChat()
 		}
 	}
 }
