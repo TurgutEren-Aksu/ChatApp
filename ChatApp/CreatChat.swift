@@ -37,6 +37,7 @@ class CreatNewMessageViewModel: ObservableObject {
 
 struct CreatChat: View {
 	
+	let newChat: (ChatUser) -> ()
 	@Environment(\.presentationMode) var presentationMode
 	@ObservedObject var mv  = CreatNewMessageViewModel()
 	
@@ -48,6 +49,7 @@ struct CreatChat: View {
 				ForEach(mv.users) { user in
 					Button {
 						presentationMode.wrappedValue.dismiss()
+						newChat(user)
 					} label: {
 						HStack(spacing: 16){
 							Text(user.email)
