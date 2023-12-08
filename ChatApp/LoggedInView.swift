@@ -10,16 +10,7 @@ struct LoggedInView: View{
 	@EnvironmentObject private var viewModel: FirebaseManager
 	var body: some View{
 		NavigationView{
-			if viewModel.loggedIn{
-				NavigationLink(
-					destination: ChatView(),
-					label: {
-						Text("Open")
-					}
-				)
-			}else{
-				Text("You are not logged in")
-			}
+			
 		}
 		
 	}

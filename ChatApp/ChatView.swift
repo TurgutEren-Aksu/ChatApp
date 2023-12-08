@@ -4,80 +4,58 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
-struct ChatView: View {
-	@EnvironmentObject private var viewModel: FirebaseManager
-	@State private var messageText: String = ""
+struct ChatView: View{
 	
-	var body: some View {
-		VStack {
-			HStack{
-//				Text("Chat")
-//					.font(.largeTitle)
-//					.fontWeight(.bold)
-//				
-				Spacer()
-				
-				if let lastSeen = viewModel.lastSeen {
-					Text("Son Görülme: \(viewModel.yourDateFormatter.string(from: lastSeen))")
-						.font(.caption)
-						.foregroundColor(.gray)
-				}
-				Spacer()
-				
-			}
-			List(viewModel.message, id: \.self) { message in
-				VStack(alignment: message.isCurrentUser ? .trailing: .leading){
-					Text("\(viewModel.usernameFromEmail(email: message.senderEmail)): \(message.content)")
-						.padding(10)
-						.background(message.isCurrentUser ? Color.blue : Color.gray)
-						.foregroundColor(.white)
-						.cornerRadius(10)
-						.frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
-					Text("\(message.timestamp, formatter: yourDateFormatter)")
-						.font(.caption)
-						.foregroundColor(.gray)
-				}
-			}
-			
-			HStack {
-				TextField("Type a message: ", text: $messageText)
-					.textFieldStyle(RoundedBorderTextFieldStyle())
+	let chatUser: ChatUser?
+	@State var messageText = ""
+	
+	var body: some View{
+		VStack{
+			ScrollView{
+				ForEach(0..<30){ num in
+					HStack{
+						Spacer ()
+						HStack{
+							Text("FAKE MESSAGE FOR NOW")
+								.foregroundStyle(.white)
+						}
+						.padding( )
+						.background(Color.blue)
+						.cornerRadius(8)
+					}
 					.padding(.horizontal)
-				
-				
-				Button("Send") {
-					sendMessage()
-					viewModel.updateUserLastSeen()
+					.padding(.top, 8)
 				}
-				.padding(.trailing)
+				HStack{ Spacer() }
+				
 			}
-			.onAppear()
+			.background(Color(.init(white: 0.95, alpha: 1)))
+			HStack{
+				TextField("Descripttion", text: $messageText)
+				Button {
+					
+				} label: {
+					Text("Send")
+						.foregroundStyle(Color(.white))
+						
+				}
+				.padding(.horizontal)
+				.padding(.vertical, 8 )
+				.background(Color.blue)
+				.cornerRadius(8)
+
+			}
+			.padding(.horizontal)
+			.padding(.vertical, 8)
 		}
 		
-		.navigationTitle("Chat")
+		.navigationTitle(chatUser?.email ?? "")
+			.navigationBarTitleDisplayMode(.inline)
 	}
-	
-	private func sendMessage() {
-		if !messageText.isEmpty {
-			let isCurrentUser = true
-			if let currentUser = Auth.auth().currentUser{
-				let timestamp = Date()
-				let message = Message(id: UUID().uuidString, senderID: "your_sender_id", content: messageText, isCurrentUser: isCurrentUser, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "", timestamp: timestamp)
-				viewModel.sendMessageToFirebase(message: message, senderUsername: viewModel.senderUsername, senderEmail: currentUser.email ?? "")
-			}
-			messageText = ""
-		}
-	}
-	let yourDateFormatter: DateFormatter = {
-		let formatter = DateFormatter()
-		formatter.dateStyle = .short
-		formatter.timeStyle = .short
-		return formatter
-	}()
 }
 
-struct ChatView_Previews: PreviewProvider {
-	static var previews: some View {
-		ChatView()
+#Preview {
+	NavigationView{
+		ChatView(chatUser: .init(data: ["uid" : "REAL USER UID", "email" : "eren3@gmail.com"]))
 	}
 }

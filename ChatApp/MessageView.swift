@@ -116,7 +116,7 @@ struct MessageView: View {
 				customNavBar
 				messageView
 				NavigationLink("", isActive: $shouldNavigateToChatLogView){
-					ChatLogView(chatUser: self.chatUser)
+					ChatView(chatUser: self.chatUser)
 				}
 				
 				
@@ -156,7 +156,7 @@ struct MessageView: View {
 					Divider()
 						.padding(.vertical, 8)
 				}.padding(.horizontal)
-			}.padding(.bottom, 50)
+			}.padding(.bottom)
 		}
 	}
 	private var newMessageButton: some View {
@@ -185,19 +185,7 @@ struct MessageView: View {
 	}
 	@State var chatUser: ChatUser?
 }
-struct ChatLogView: View{
-	
-	let chatUser: ChatUser?
-	
-	var body: some View{
-		ScrollView{
-			ForEach(0..<10){ num in
-				Text("FAKE MESSAGE FOR NOW")
-			}
-		}.navigationTitle(chatUser?.email ?? "")
-			.navigationBarTitleDisplayMode(.inline)
-	}
-}
+
 
 struct MessageView_Previews: PreviewProvider {
 	static var previews: some View{
