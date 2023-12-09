@@ -10,47 +10,62 @@ struct ChatView: View{
 	@State var messageText = ""
 	
 	var body: some View{
-		VStack{
-			ScrollView{
-				ForEach(0..<30){ num in
-					HStack{
-						Spacer ()
-						HStack{
-							Text("FAKE MESSAGE FOR NOW")
-								.foregroundStyle(.white)
-						}
-						.padding( )
-						.background(Color.blue)
-						.cornerRadius(8)
-					}
-					.padding(.horizontal)
-					.padding(.top, 8)
-				}
-				HStack{ Spacer() }
-				
+		ZStack{
+			messageTopBar
+			VStack{
+				Spacer()
+				chatBottomBar
+					.background(Color.white)
 			}
-			.background(Color(.init(white: 0.95, alpha: 1)))
-			HStack{
-				TextField("Descripttion", text: $messageText)
-				Button {
-					
-				} label: {
-					Text("Send")
-						.foregroundStyle(Color(.white))
-						
-				}
-				.padding(.horizontal)
-				.padding(.vertical, 8 )
-				.background(Color.blue)
-				.cornerRadius(8)
-
-			}
-			.padding(.horizontal)
-			.padding(.vertical, 8)
+			
 		}
 		
+		
 		.navigationTitle(chatUser?.email ?? "")
-			.navigationBarTitleDisplayMode(.inline)
+		.navigationBarTitleDisplayMode(.inline)
+	}
+	private var messageTopBar: some View {
+		ScrollView{
+			ForEach(0..<30){ num in
+				HStack{
+					Spacer ()
+					HStack{
+						Text("FAKE MESSAGE FOR NOW")
+							.foregroundStyle(.white)
+					}
+					.padding( )
+					.background(Color.blue)
+					.cornerRadius(8)
+					
+				}
+				.padding(.horizontal)
+				.padding(.top, 8)
+				
+			}
+			HStack{ Spacer() }
+			
+		}
+		.background(Color(.init(white: 0.95, alpha: 1)))
+		.padding(.bottom,65)
+	}
+	private var chatBottomBar: some View {
+		HStack(spacing: 16){
+			TextField("Descripttion", text: $messageText)
+			Button {
+				
+			} label: {
+				Text("Send")
+					.foregroundStyle(Color(.white))
+				
+			}
+			.padding(.horizontal)
+			.padding(.vertical, 8 )
+			.background(Color.blue)
+			.cornerRadius(8)
+			
+		}
+		.padding(.horizontal)
+		.padding(.vertical, 8)
 	}
 }
 
