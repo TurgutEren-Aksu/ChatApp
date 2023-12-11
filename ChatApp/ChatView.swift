@@ -6,22 +6,51 @@ import FirebaseAuth
 class SendButton: ObservableObject{
 	
 	@Published var messageText = ""
+	@Published var errorMessage = ""
+	let chatUser: ChatUser?  
 	
-	init(){
-		
+	init(chatUser: ChatUser?){
+		self.chatUser = chatUser
 	}
 	func handleSend(){
 		print(messageText)
+		guard let sourceID = FirebaseManager.shared.auth.currentUser?.uid else { return }
+		
+		guard let destinationID = chatUser?.uid else { return }
+		let document =
+		FirebaseManager.shared.firestore
+			.collection("messages")
+			.document(sourceID)
+			.collection(destinationID)
+			.document()
+		
+		let messageCollection = ["sourceID": sourceID, "destinationID" : destinationID, "text" : self.messageText, "timestamp" : Timestamp() ] as [String : Any]
+		document.setData(messageCollection) { error  in
+			if let error = error {
+				print(error)
+				self.errorMessage = "Firestore'a gönderme işlemi başarısız oldu\(error)"
+			}
+		}
 	}
 }
 struct ChatView: View{
 	
 	let chatUser: ChatUser?
+	init(chatUser: ChatUser?){
+		
+		self.chatUser = chatUser
+		self.vm = .init(chatUser: chatUser)
+	}
+	
 	@State var messageText = ""
-	@ObservedObject var vm = SendButton()
+	@ObservedObject var vm: SendButton
 	
 	var body: some View{
-		messageTopBar
+		ZStack {
+			messageTopBar
+			Text(vm.errorMessage)
+		}
+		
 		.navigationTitle(chatUser?.email ?? "")
 		.navigationBarTitleDisplayMode(.inline)
 	}
