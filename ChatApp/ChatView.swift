@@ -24,8 +24,25 @@ class SendButton: ObservableObject{
 			.collection(destinationID)
 			.document()
 		
-		let messageCollection = ["sourceID": sourceID, "destinationID" : destinationID, "text" : self.messageText, "timestamp" : Timestamp() ] as [String : Any]
+		let messageCollection = ["sourceID": sourceID,
+								 "destinationID": destinationID,
+								 "messageText": self.messageText,
+								 "timestamp" : Timestamp() ] as [String : Any]
+		
 		document.setData(messageCollection) { error  in
+			if let error = error {
+				print(error)
+				self.errorMessage = "Firestore'a gönderme işlemi başarısız oldu\(error)"
+			}
+			self.messageText = ""
+		}
+		let destinationMessageDocument =
+		FirebaseManager.shared.firestore
+			.collection("messages")
+			.document(destinationID)
+			.collection(sourceID)
+			.document()
+		destinationMessageDocument.setData(messageCollection) { error  in
 			if let error = error {
 				print(error)
 				self.errorMessage = "Firestore'a gönderme işlemi başarısız oldu\(error)"
@@ -89,7 +106,12 @@ struct ChatView: View{
 	}
 	private var chatBottomBar: some View {
 		HStack(spacing: 16){
-			TextField("Descripttion", text: $messageText)
+			ZStack {
+				DescriptionPlaceholder()
+				TextEditor(text: $vm.messageText)
+					.opacity(vm.messageText.isEmpty ? 0.5 : 1)
+			}
+			.frame(height: 40)
 			Button {
 				vm.handleSend()
 			} label: {
@@ -107,9 +129,22 @@ struct ChatView: View{
 		.padding(.vertical, 8)
 	}
 }
+private struct DescriptionPlaceholder: View {
+	var body: some View {
+		HStack {
+			Text("Description")
+				.foregroundColor(Color(.gray))
+				.font(.system(size: 17))
+				.padding(.leading, 5)
+				.padding(.top, -4)
+			Spacer()
+		}
+	}
+}
 
 #Preview {
-	NavigationView{
-		ChatView(chatUser: .init(data: ["uid" : "REAL USER UID", "email" : "eren3@gmail.com"]))
-	}
+//	NavigationView{
+//		ChatView(chatUser: .init(data: ["uid" : "REAL USER UID", "email" : "eren3@gmail.com"]))
+//	}
+	MessageView()
 }
