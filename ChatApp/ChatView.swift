@@ -3,14 +3,54 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-class SendButton: ObservableObject{
+
+class FirebaseConstants{
+	static let sourceID = "sourceID"
+	static let destinationID = "destinationID"
+	static let messageText = "messageText"
 	
+}
+class ChatMessage {
+	let sourceID, destinationID, messageText: String
+	init(data: [String: Any]) {
+		self.sourceID = data[FirebaseConstants.sourceID] as? String ?? ""
+		self.destinationID = data[FirebaseConstants.destinationID] as? String ?? ""
+		self.messageText = data[FirebaseConstants.messageText] as? String ?? ""
+	}
+}
+
+class SendButton: ObservableObject{
+	@Published var chatMessages = [ChatMessage]()
 	@Published var messageText = ""
 	@Published var errorMessage = ""
 	let chatUser: ChatUser?  
 	
+	
+
 	init(chatUser: ChatUser?){
 		self.chatUser = chatUser
+		fetchMessages()
+	}
+	private func fetchMessages(){
+		guard let sourceID = FirebaseManager.shared.auth.currentUser?.uid else { return }
+		
+		guard let destinationID = chatUser?.uid else { return }
+		FirebaseManager.shared.firestore
+			.collection("messages")
+			.document(sourceID)
+			.collection(destinationID)
+			.addSnapshotListener { querySnapshot, error in
+				if let error = error {
+					self.errorMessage = "Mesajları çekme işlemi başarısız oldu \(error)"
+					print(error)
+					return
+				}
+				querySnapshot?.documents.forEach({ queryDocumentSnapshot in
+					let data = queryDocumentSnapshot.data()
+					let chatMessage = ChatMessage(data: data)
+					self.chatMessages.append(.init(data: data))
+				})
+			}
 	}
 	func handleSend(){
 		print(messageText)
@@ -24,9 +64,9 @@ class SendButton: ObservableObject{
 			.collection(destinationID)
 			.document()
 		
-		let messageCollection = ["sourceID": sourceID,
-								 "destinationID": destinationID,
-								 "messageText": self.messageText,
+		let messageCollection = [FirebaseConstants.sourceID: sourceID,
+								 FirebaseConstants.destinationID: destinationID,
+								 FirebaseConstants.messageText: self.messageText,
 								 "timestamp" : Timestamp() ] as [String : Any]
 		
 		document.setData(messageCollection) { error  in
