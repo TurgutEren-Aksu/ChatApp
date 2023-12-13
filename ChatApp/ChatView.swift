@@ -10,9 +10,12 @@ class FirebaseConstants{
 	static let messageText = "messageText"
 	
 }
-class ChatMessage {
+class ChatMessage: Identifiable {
+	var id: String { documentID }
+	let documentID: String
 	let sourceID, destinationID, messageText: String
-	init(data: [String: Any]) {
+	init(documentID: String, data: [String: Any]) {
+		self.documentID = documentID
 		self.sourceID = data[FirebaseConstants.sourceID] as? String ?? ""
 		self.destinationID = data[FirebaseConstants.destinationID] as? String ?? ""
 		self.messageText = data[FirebaseConstants.messageText] as? String ?? ""
@@ -47,8 +50,9 @@ class SendButton: ObservableObject{
 				}
 				querySnapshot?.documents.forEach({ queryDocumentSnapshot in
 					let data = queryDocumentSnapshot.data()
-					let chatMessage = ChatMessage(data: data)
-					self.chatMessages.append(.init(data: data))
+//					let chatMessage = ChatMessage(data: data)
+					let docID = queryDocumentSnapshot.documentID
+					self.chatMessages.append(.init(documentID: docID, data: data))
 				})
 			}
 	}
@@ -115,11 +119,14 @@ struct ChatView: View{
 		VStack{
 			if #available(iOS 15.0, *){
 				ScrollView{
-					ForEach(0..<30){ num in
+					ForEach(vm.chatMessages) { message in
+//						Text(message.messageText)
+//					}
+//					ForEach(0..<30){ num in
 						HStack{
 							Spacer ()
 							HStack{
-								Text("FAKE MESSAGE FOR NOW")
+								Text(message.messageText)
 									.foregroundStyle(.white)
 							}
 							.padding( )
