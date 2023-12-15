@@ -48,12 +48,18 @@ class SendButton: ObservableObject{
 					print(error)
 					return
 				}
-				querySnapshot?.documents.forEach({ queryDocumentSnapshot in
-					let data = queryDocumentSnapshot.data()
-//					let chatMessage = ChatMessage(data: data)
-					let docID = queryDocumentSnapshot.documentID
-					self.chatMessages.append(.init(documentID: docID, data: data))
+				querySnapshot?.documentChanges.forEach({ change in
+					if change.type == .added {
+						let data = change.document.data()
+						self.chatMessages.append(.init(documentID: change.document.documentID, data: data))
+					}
 				})
+//				querySnapshot?.documents.forEach({ queryDocumentSnapshot in
+//					let data = queryDocumentSnapshot.data()
+////					let chatMessage = ChatMessage(data: data)
+//					let docID = queryDocumentSnapshot.documentID
+//					self.chatMessages.append(.init(documentID: docID, data: data))
+//				})
 			}
 	}
 	func handleSend(){
@@ -120,9 +126,6 @@ struct ChatView: View{
 			if #available(iOS 15.0, *){
 				ScrollView{
 					ForEach(vm.chatMessages) { message in
-//						Text(message.messageText)
-//					}
-//					ForEach(0..<30){ num in
 						HStack{
 							Spacer ()
 							HStack{
