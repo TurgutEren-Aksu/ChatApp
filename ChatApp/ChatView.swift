@@ -42,6 +42,7 @@ class SendButton: ObservableObject{
 			.collection("messages")
 			.document(sourceID)
 			.collection(destinationID)
+			.order(by: "timestamp")
 			.addSnapshotListener { querySnapshot, error in
 				if let error = error {
 					self.errorMessage = "Mesajları çekme işlemi başarısız oldu \(error)"
@@ -54,12 +55,6 @@ class SendButton: ObservableObject{
 						self.chatMessages.append(.init(documentID: change.document.documentID, data: data))
 					}
 				})
-//				querySnapshot?.documents.forEach({ queryDocumentSnapshot in
-//					let data = queryDocumentSnapshot.data()
-////					let chatMessage = ChatMessage(data: data)
-//					let docID = queryDocumentSnapshot.documentID
-//					self.chatMessages.append(.init(documentID: docID, data: data))
-//				})
 			}
 	}
 	func handleSend(){
@@ -126,16 +121,34 @@ struct ChatView: View{
 			if #available(iOS 15.0, *){
 				ScrollView{
 					ForEach(vm.chatMessages) { message in
-						HStack{
-							Spacer ()
-							HStack{
-								Text(message.messageText)
-									.foregroundStyle(.white)
+						VStack{
+							if message.sourceID == FirebaseManager.shared.auth.currentUser?.uid{
+								HStack{
+									Spacer ()
+									HStack{
+										Text(message.messageText)
+											.foregroundStyle(.white)
+									}
+									.padding( )
+									.background(Color.blue)
+									.cornerRadius(8)
+									
+								}
+								
+							} else {
+								HStack{
+									
+									HStack{
+										Text(message.messageText)
+											.foregroundStyle(.black)
+									}
+									.padding()
+									.background(Color.white)
+									.cornerRadius(8)
+									Spacer ()
+									
+								}
 							}
-							.padding( )
-							.background(Color.blue)
-							.cornerRadius(8)
-							
 						}
 						.padding(.horizontal)
 						.padding(.top, 8)
