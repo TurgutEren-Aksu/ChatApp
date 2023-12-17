@@ -94,6 +94,7 @@ class SendButton: ObservableObject{
 			}
 		}
 	}
+	@Published var count = 0
 }
 struct ChatView: View{
 	
@@ -115,43 +116,18 @@ struct ChatView: View{
 		
 		.navigationTitle(chatUser?.email ?? "")
 		.navigationBarTitleDisplayMode(.inline)
+		.navigationBarItems(trailing: Button(action: {
+			vm.count += 1
+		}, label: {
+			Text("Count: \(vm.count)")
+		}))
 	}
 	private var messageTopBar: some View {
 		VStack{
 			if #available(iOS 15.0, *){
 				ScrollView{
 					ForEach(vm.chatMessages) { message in
-						VStack{
-							if message.sourceID == FirebaseManager.shared.auth.currentUser?.uid{
-								HStack{
-									Spacer ()
-									HStack{
-										Text(message.messageText)
-											.foregroundStyle(.white)
-									}
-									.padding( )
-									.background(Color.blue)
-									.cornerRadius(8)
-									
-								}
-								
-							} else {
-								HStack{
-									
-									HStack{
-										Text(message.messageText)
-											.foregroundStyle(.black)
-									}
-									.padding()
-									.background(Color.white)
-									.cornerRadius(8)
-									Spacer ()
-									
-								}
-							}
-						}
-						.padding(.horizontal)
-						.padding(.top, 8)
+						MessageViewUI(message:message)
 						
 					}
 					HStack{ Spacer() }
@@ -204,10 +180,42 @@ private struct DescriptionPlaceholder: View {
 		}
 	}
 }
-
+struct MessageViewUI: View {
+	let message: ChatMessage
+	var body: some View{
+		VStack{
+			if message.sourceID == FirebaseManager.shared.auth.currentUser?.uid{
+				HStack{
+					Spacer ()
+					HStack{
+						Text(message.messageText)
+							.foregroundStyle(.white)
+					}
+					.padding( )
+					.background(Color.blue)
+					.cornerRadius(8)
+					
+				}
+				
+			} else {
+				HStack{
+					
+					HStack{
+						Text(message.messageText)
+							.foregroundStyle(.black)
+					}
+					.padding()
+					.background(Color.white)
+					.cornerRadius(8)
+					Spacer ()
+					
+				}
+			}
+		}
+		.padding(.horizontal)
+		.padding(.top, 8)
+	}
+}
 #Preview {
-//	NavigationView{
-//		ChatView(chatUser: .init(data: ["uid" : "REAL USER UID", "email" : "eren3@gmail.com"]))
-//	}
 	MessageView()
 }

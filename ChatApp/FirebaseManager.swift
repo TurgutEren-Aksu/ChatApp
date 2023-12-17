@@ -14,7 +14,7 @@ class FirebaseManager: ObservableObject {
 	static let shared = FirebaseManager()
 	@Published var loginStatusMessage = ""
 	@Published var loggedIn = false
-	@Published var message : [Message] = []
+	
 	let auth = Auth.auth()
 	let storage = Storage.storage()
 	let database = Database.database().reference()
@@ -23,44 +23,6 @@ class FirebaseManager: ObservableObject {
 	@Published var shouldNavigateToMessageView = false
 	let firestore = Firestore.firestore()
 	
-	init() {
-		observeMessages()
-	}
-	private func observeMessages() {
-		database.child("messages").observe(.childAdded) { snapshot, _ in
-			if let messageData = snapshot.value as? [String: Any],
-			   let id = messageData["id"] as? String,
-			   let senderID = messageData["senderID"] as? String,
-			   let content = messageData["content"] as? String,
-			   let senderUsername = messageData["senderUsername"] as? String,
-			   let senderEmail = messageData["senderEmail"] as? String,
-			   let timestampString = messageData["timestamp"] as? String,
-			   let timestamp = Double(timestampString){
-				
-				let isCurrentUser = senderID == Auth.auth().currentUser?.uid
-				let message = Message(id: id, senderID: senderID, content: content, isCurrentUser: isCurrentUser, senderUsername: senderUsername, senderEmail: senderEmail,timestamp: Date(timeIntervalSince1970: timestamp))
-				self.message.append(message)
-			}
-		}
-	}
-	
-	func sendMessageToFirebase(message: Message, senderUsername: String, senderEmail: String) {
-		let messageData: [String: Any] = [
-			"id": message.id,
-			"senderID": message.senderID,
-			"content": message.content,
-			"senderUsername": senderUsername,
-			"senderEmail": senderEmail,
-			"timestamp": String(message.timestamp.timeIntervalSince1970)
-		]
-		database.child("messages").child(message.id).setValue(messageData) { error, _ in
-			if let error = error {
-				print("Error sending message: \(error)")
-			} else {
-				print("Message sent successfully!")
-			}
-		}
-	}
 	func loginUser(email: String, password: String) {
 		auth.signIn(withEmail: email, password: password) { result, error in
 			if let error = error {
@@ -92,16 +54,13 @@ class FirebaseManager: ObservableObject {
 		self.shouldNavigateToMessageView = true
 		let collectionRef = firestore.collection("collectionName")
 		
-		// Replace "documentId" with the desired document ID or let Firestore auto-generate it
 		let documentRef = collectionRef.document(userID!)
 		
-		// Replace "fieldValue" and "anotherFieldValue" with your data
 		let data: [String: Any] = [
 			"uid": "\(userID!)",
 			"email": "\(email)"
 		]
 		
-		// Add the data to Firestore
 		documentRef.setData(data) { error in
 			if let error = error {
 				print("Error adding document: \(error)")
