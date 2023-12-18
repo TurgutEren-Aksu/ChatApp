@@ -126,11 +126,21 @@ struct ChatView: View{
 		VStack{
 			if #available(iOS 15.0, *){
 				ScrollView{
-					ForEach(vm.chatMessages) { message in
-						MessageViewUI(message:message)
+					ScrollViewReader{ proxy in
+						VStack{
+							ForEach(vm.chatMessages) { message in
+								MessageViewUI(message:message)
+								
+							}
+							HStack{ Spacer() }
+								.id("Empty")
+						}
 						
+							.onReceive(vm.$count) { _ in
+								proxy.scrollTo("Empty", anchor: .bottom)
+							}
 					}
-					HStack{ Spacer() }
+				
 					
 				}
 				.background(Color(.init(white: 0.95, alpha: 1)))
