@@ -137,6 +137,9 @@ struct ChatView: View{
 						}
 						
 							.onReceive(vm.$count) { _ in
+									withAnimation(.easeOut(duration: 0.5)){
+										proxy.scrollTo("Empty",anchor: .bottom)
+									}
 								proxy.scrollTo("Empty", anchor: .bottom)
 							}
 					}
