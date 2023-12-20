@@ -80,6 +80,7 @@ class SendButton: ObservableObject{
 				self.errorMessage = "Firestore'a gönderme işlemi başarısız oldu\(error)"
 			}
 			self.messageText = ""
+			self.count += 1
 		}
 		let destinationMessageDocument =
 		FirebaseManager.shared.firestore
@@ -116,12 +117,13 @@ struct ChatView: View{
 		
 		.navigationTitle(chatUser?.email ?? "")
 		.navigationBarTitleDisplayMode(.inline)
-		.navigationBarItems(trailing: Button(action: {
-			vm.count += 1
-		}, label: {
-			Text("Count: \(vm.count)")
-		}))
+//		.navigationBarItems(trailing: Button(action: {
+//			vm.count += 1
+//		}, label: {
+//			Text("Count: \(vm.count)")
+//		}))
 	}
+	static let scrollToString = "Empty"
 	private var messageTopBar: some View {
 		VStack{
 			if #available(iOS 15.0, *){
@@ -133,14 +135,14 @@ struct ChatView: View{
 								
 							}
 							HStack{ Spacer() }
-								.id("Empty")
+								.id(Self.scrollToString)
 						}
 						
 							.onReceive(vm.$count) { _ in
 									withAnimation(.easeOut(duration: 0.5)){
-										proxy.scrollTo("Empty",anchor: .bottom)
+										proxy.scrollTo(Self.scrollToString,anchor: .bottom)
 									}
-								proxy.scrollTo("Empty", anchor: .bottom)
+//								proxy.scrollTo("Empty", anchor: .bottom)
 							}
 					}
 				
