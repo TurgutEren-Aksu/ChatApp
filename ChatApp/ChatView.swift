@@ -55,6 +55,10 @@ class SendButton: ObservableObject{
 						self.chatMessages.append(.init(documentID: change.document.documentID, data: data))
 					}
 				})
+				DispatchQueue.main.async {
+					self.count += 1
+				}
+				
 			}
 	}
 	func handleSend(){
