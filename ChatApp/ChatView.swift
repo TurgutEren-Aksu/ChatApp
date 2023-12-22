@@ -83,6 +83,7 @@ class SendButton: ObservableObject{
 				print(error)
 				self.errorMessage = "Firestore'a gönderme işlemi başarısız oldu\(error)"
 			}
+			self.recentMessage()
 			self.messageText = ""
 			self.count += 1
 		}
@@ -99,8 +100,18 @@ class SendButton: ObservableObject{
 			}
 		}
 	}
+	private func recentMessage(){
+		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return}
+		guard let destinationID = self.chatUser?.uid else {return}
+		FirebaseManager.shared.firestore
+			.collection("RecentMessage")
+			.document(uid)
+			.collection("messages")
+			.document(destinationID)
+	}
 	@Published var count = 0
 }
+
 struct ChatView: View{
 	
 	let chatUser: ChatUser?
