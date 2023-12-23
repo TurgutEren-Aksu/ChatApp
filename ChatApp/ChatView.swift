@@ -108,6 +108,12 @@ class SendButton: ObservableObject{
 			.document(uid)
 			.collection("messages")
 			.document(destinationID)
+		let data = [
+			"timestamp" : Timestamp(),
+			FirebaseConstants.messageText: self.messageText,
+			FirebaseConstants.sourceID: uid,
+			FirebaseConstants.destinationID: destinationID
+		] as [String : Any]
 	}
 	@Published var count = 0
 }
