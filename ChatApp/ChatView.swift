@@ -8,6 +8,7 @@ class FirebaseConstants{
 	static let sourceID = "sourceID"
 	static let destinationID = "destinationID"
 	static let messageText = "messageText"
+	static let timestamp = Timestamp()
 	
 }
 class ChatMessage: Identifiable {
@@ -101,9 +102,10 @@ class SendButton: ObservableObject{
 		}
 	}
 	private func recentMessage(){
+		guard let chatUser = chatUser else {return}
 		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return}
 		guard let destinationID = self.chatUser?.uid else {return}
-		FirebaseManager.shared.firestore
+		let document = FirebaseManager.shared.firestore
 			.collection("RecentMessage")
 			.document(uid)
 			.collection("messages")
@@ -114,6 +116,12 @@ class SendButton: ObservableObject{
 			FirebaseConstants.sourceID: uid,
 			FirebaseConstants.destinationID: destinationID
 		] as [String : Any]
+		document.setData(data) { error in
+			if let error = error {
+				self.errorMessage = "Failed to save recent messagee \(error)"
+				return
+			}
+		}
 	}
 	@Published var count = 0
 }
