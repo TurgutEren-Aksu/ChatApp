@@ -9,17 +9,20 @@ class FirebaseConstants{
 	static let destinationID = "destinationID"
 	static let messageText = "messageText"
 	static let timestamp = Timestamp()
+	static let email = "email"
 	
 }
 class ChatMessage: Identifiable {
 	var id: String { documentID }
 	let documentID: String
 	let sourceID, destinationID, messageText: String
+	let email: String
 	init(documentID: String, data: [String: Any]) {
 		self.documentID = documentID
 		self.sourceID = data[FirebaseConstants.sourceID] as? String ?? ""
 		self.destinationID = data[FirebaseConstants.destinationID] as? String ?? ""
 		self.messageText = data[FirebaseConstants.messageText] as? String ?? ""
+		self.email = data[FirebaseConstants.email] as? String ?? ""
 	}
 }
 
@@ -114,7 +117,8 @@ class SendButton: ObservableObject{
 			"timestamp" : Timestamp(),
 			FirebaseConstants.messageText: self.messageText,
 			FirebaseConstants.sourceID: uid,
-			FirebaseConstants.destinationID: destinationID
+			FirebaseConstants.destinationID: destinationID,
+			FirebaseConstants.email: chatUser.email,
 		] as [String : Any]
 		document.setData(data) { error in
 			if let error = error {
