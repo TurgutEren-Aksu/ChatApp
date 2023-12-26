@@ -6,7 +6,32 @@
 //
 
 import SwiftUI
-
+import Firebase
+struct RecentMessage: Identifiable {
+	
+	var id: String { documentId }
+	
+	let documentId: String
+	
+	let sourceId, destinationId: String
+	
+	let text,email: String
+	
+	let timestamp: Timestamp
+	
+	init(documentId: String, data: [String: Any]){
+		
+		self.documentId = documentId
+		
+		self.text = data["text"] as? String ?? ""
+		self.email = data["email"] as? String ?? ""
+		self.destinationId = data["destinationId"] as? String ?? ""
+		self.sourceId = data["sourceId"] as? String ?? ""
+		
+		self.timestamp = data["timestamp"] as? Timestamp ?? Timestamp(date: Date())
+		
+	}
+}
 class MainMessageViewModel: ObservableObject{
 	
 	@Published var errorMessage = ""
