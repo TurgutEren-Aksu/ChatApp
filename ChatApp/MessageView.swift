@@ -46,6 +46,21 @@ class MainMessageViewModel: ObservableObject{
 		}
 		
 		fetchCurrentUser()
+		recentMessage()
+	}
+	private func recentMessage(){
+		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return }
+		
+		FirebaseManager.shared.firestore
+			.collection("RecentMessage")
+			.document()
+			.collection("messages")
+			.addSnapshotListener { QuerySnapshot, error in
+				if let error = error {
+					self.errorMessage = "Failed message to listen \(error)"
+					return
+				}
+			}
 	}
 	func fetchCurrentUser(){
 //		self.errorMessage = "Fetching current user"
