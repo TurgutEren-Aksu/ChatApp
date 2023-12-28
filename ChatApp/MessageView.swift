@@ -48,12 +48,13 @@ class MainMessageViewModel: ObservableObject{
 		fetchCurrentUser()
 		recentMessage()
 	}
+	@Published var recentMessaeg = [RecentMessage]()
 	private func recentMessage(){
 		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return }
 		
 		FirebaseManager.shared.firestore
 			.collection("RecentMessage")
-			.document()
+			.document(uid)
 			.collection("messages")
 			.addSnapshotListener { QuerySnapshot, error in
 				if let error = error {
