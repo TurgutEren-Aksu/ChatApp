@@ -61,6 +61,12 @@ class MainMessageViewModel: ObservableObject{
 					self.errorMessage = "Failed message to listen \(error)"
 					return
 				}
+				QuerySnapshot?.documentChanges.forEach({ changes in
+//					if changes.type == .added {
+						let docID = changes.document.documentID
+						self.recentMessaeg.append(.init(documentId: docID, data: changes.document.data()))
+//					}
+				})
 			}
 	}
 	func fetchCurrentUser(){
