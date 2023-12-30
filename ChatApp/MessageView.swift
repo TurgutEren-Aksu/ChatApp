@@ -15,7 +15,7 @@ struct RecentMessage: Identifiable {
 	
 	let sourceId, destinationId: String
 	
-	let text,email: String
+	let messageText,email: String
 	
 	let timestamp: Timestamp
 	
@@ -23,7 +23,7 @@ struct RecentMessage: Identifiable {
 		
 		self.documentId = documentId
 		
-		self.text = data["text"] as? String ?? ""
+		self.messageText = data["messageText"] as? String ?? ""
 		self.email = data["email"] as? String ?? ""
 		self.destinationId = data["destinationId"] as? String ?? ""
 		self.sourceId = data["sourceId"] as? String ?? ""
@@ -62,15 +62,20 @@ class MainMessageViewModel: ObservableObject{
 					return
 				}
 				QuerySnapshot?.documentChanges.forEach({ changes in
-//					if changes.type == .added {
+					
 						let docID = changes.document.documentID
+					if let index = self.recentMessaeg.firstIndex(where: { remove in
+						return remove.documentId == docID
+					}){
+						self.recentMessaeg.remove(at: index)
+					}
 						self.recentMessaeg.append(.init(documentId: docID, data: changes.document.data()))
-//					}
+					
 				})
 			}
 	}
 	func fetchCurrentUser(){
-//		self.errorMessage = "Fetching current user"
+		//		self.errorMessage = "Fetching current user"
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid
 		else {
 			self.errorMessage = "Could not find firebase uid"
@@ -84,20 +89,20 @@ class MainMessageViewModel: ObservableObject{
 					print("Failed to fetch user:",error)
 					return
 				}
-//				self.errorMessage = "123"
+				//				self.errorMessage = "123"
 				guard let data = snapshot?.data() else {
 					self.errorMessage = "No data found."
 					return
 				}
-//				print(data)
-//				self.errorMessage = "\(data.description)"
+				//				print(data)
+				//				self.errorMessage = "\(data.description)"
 				
 				self.chatUser = .init(data: data)
 				
-//				self.errorMessage = chatUser.uid
+				//				self.errorMessage = chatUser.uid
 				
 			}
-
+		
 	}
 	
 	func handleSignOut() {
@@ -159,7 +164,7 @@ struct MessageView: View {
 	var body: some View {
 		NavigationView{
 			VStack{
-//				Text("User:\(mv.chatUser?.uid ?? "")")
+				//				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
 				NavigationLink("", isActive: $shouldNavigateToChatLogView){
@@ -176,7 +181,7 @@ struct MessageView: View {
 	}
 	private var messageView: some View{
 		ScrollView{
-			ForEach(0..<10, id: \.self) { num in
+			ForEach(mv.recentMessaeg) { recentMessaeg in
 				VStack{
 					NavigationLink{
 						Text("Destination")
@@ -188,9 +193,10 @@ struct MessageView: View {
 								.overlay(RoundedRectangle(cornerRadius: 44)
 									.stroke(Color(.label), lineWidth:1))
 							VStack(alignment: .leading){
-								Text("Username")
+								Text(recentMessaeg.email)
 									.font(.system(size: 16, weight: .bold))
-								Text("Message sent to user")
+									.foregroundColor(Color(.label))
+								Text(recentMessaeg.messageText)
 									.font(.system(size:14))
 									.foregroundColor(Color(.lightGray))
 							}
