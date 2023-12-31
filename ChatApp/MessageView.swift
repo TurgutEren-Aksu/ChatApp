@@ -69,7 +69,8 @@ class MainMessageViewModel: ObservableObject{
 					}){
 						self.recentMessaeg.remove(at: index)
 					}
-						self.recentMessaeg.append(.init(documentId: docID, data: changes.document.data()))
+					self.recentMessaeg.insert(.init(documentId: docID, data: changes.document.data()), at: 0)
+//						self.recentMessaeg.append()
 					
 				})
 			}
