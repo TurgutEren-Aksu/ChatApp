@@ -7,31 +7,8 @@
 
 import SwiftUI
 import Firebase
-struct RecentMessage: Identifiable {
-	
-	var id: String { documentId }
-	
-	let documentId: String
-	
-	let sourceId, destinationId: String
-	
-	let messageText,email: String
-	
-	let timestamp: Timestamp
-	
-	init(documentId: String, data: [String: Any]){
-		
-		self.documentId = documentId
-		
-		self.messageText = data["messageText"] as? String ?? ""
-		self.email = data["email"] as? String ?? ""
-		self.destinationId = data["destinationId"] as? String ?? ""
-		self.sourceId = data["sourceId"] as? String ?? ""
-		
-		self.timestamp = data["timestamp"] as? Timestamp ?? Timestamp(date: Date())
-		
-	}
-}
+import FirebaseFirestoreSwift
+
 class MainMessageViewModel: ObservableObject{
 	
 	@Published var errorMessage = ""
@@ -65,18 +42,28 @@ class MainMessageViewModel: ObservableObject{
 					
 						let docID = changes.document.documentID
 					if let index = self.recentMessaeg.firstIndex(where: { remove in
-						return remove.documentId == docID
+						return remove.id == docID
 					}){
 						self.recentMessaeg.remove(at: index)
 					}
-					self.recentMessaeg.insert(.init(documentId: docID, data: changes.document.data()), at: 0)
+					
+					do{
+						let rm = try changes.document.data(as: RecentMessage.self)
+						self.recentMessaeg.insert(rm, at: 0)
+					}
+					catch{
+						print(error)
+					}
+					if let rm = try? changes.document.data(as: RecentMessage.self) {
+						self.recentMessaeg.insert(rm, at: 0)
+					}
+//					self.recentMessaeg.insert(.init(documentId: docID, data: changes.document.data()), at: 0)
 //						self.recentMessaeg.append()
 					
 				})
 			}
 	}
 	func fetchCurrentUser(){
-		//		self.errorMessage = "Fetching current user"
 		guard let uid = FirebaseManager.shared.auth.currentUser?.uid
 		else {
 			self.errorMessage = "Could not find firebase uid"
@@ -197,9 +184,11 @@ struct MessageView: View {
 								Text(recentMessaeg.email)
 									.font(.system(size: 16, weight: .bold))
 									.foregroundColor(Color(.label))
+									.multilineTextAlignment(.leading)
 								Text(recentMessaeg.messageText)
 									.font(.system(size:14))
 									.foregroundColor(Color(.lightGray))
+									.multilineTextAlignment(.leading)
 							}
 							Spacer()
 							Text("22d")

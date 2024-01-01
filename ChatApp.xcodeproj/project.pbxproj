@@ -43,6 +43,7 @@
 		B1941B4A2B08FF2000571760 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B492B08FF2000571760 /* FirebaseRemoteConfigSwift */; };
 		B1941B4C2B08FF2000571760 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B4B2B08FF2000571760 /* FirebaseStorage */; };
 		B1941B4E2B08FF2000571760 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B1941B4D2B08FF2000571760 /* FirebaseStorageCombine-Community */; };
+		B1A824BB2B432C1800485082 /* RecentMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A824BA2B432C1800485082 /* RecentMessage.swift */; };
 		B1D496AB2B148CCF00C416C4 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D496AA2B148CCF00C416C4 /* MessageView.swift */; };
 		B1FFBC592B2ECD7200D20F08 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FFBC582B2ECD7200D20F08 /* ChatUser.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		B1941B0E2B08FD0000571760 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		B1941B102B08FD2100571760 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		B1941B162B08FE0600571760 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B1A824BA2B432C1800485082 /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
 		B1D496AA2B148CCF00C416C4 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		B1FFBC582B2ECD7200D20F08 /* ChatUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				B1941B002B08FCD000571760 /* ChatAppApp.swift */,
 				B1941B162B08FE0600571760 /* AppDelegate.swift */,
 				B1D496AA2B148CCF00C416C4 /* MessageView.swift */,
+				B1A824BA2B432C1800485082 /* RecentMessage.swift */,
 				B113C6D42B1F009800A5F7D6 /* CreatChat.swift */,
 				B1FFBC582B2ECD7200D20F08 /* ChatUser.swift */,
 				B1941B102B08FD2100571760 /* ChatView.swift */,
@@ -239,6 +242,7 @@
 			files = (
 				B1FFBC592B2ECD7200D20F08 /* ChatUser.swift in Sources */,
 				B113C6D52B1F009800A5F7D6 /* CreatChat.swift in Sources */,
+				B1A824BB2B432C1800485082 /* RecentMessage.swift in Sources */,
 				B1941B0F2B08FD0000571760 /* FirebaseManager.swift in Sources */,
 				B1941B112B08FD2100571760 /* ChatView.swift in Sources */,
 				B1D496AB2B148CCF00C416C4 /* MessageView.swift in Sources */,
