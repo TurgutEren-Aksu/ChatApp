@@ -4,7 +4,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
-class FirebaseConstants{
+struct FirebaseConstants{
 	static let sourceID = "sourceID"
 	static let destinationID = "destinationID"
 	static let messageText = "messageText"
@@ -12,7 +12,7 @@ class FirebaseConstants{
 	static let email = "email"
 	
 }
-class ChatMessage: Identifiable {
+struct ChatMessage: Identifiable {
 	var id: String { documentID }
 	let documentID: String
 	let sourceID, destinationID, messageText: String
@@ -175,7 +175,6 @@ struct ChatView: View{
 									withAnimation(.easeOut(duration: 0.5)){
 										proxy.scrollTo(Self.scrollToString,anchor: .bottom)
 									}
-//								proxy.scrollTo("Empty", anchor: .bottom)
 							}
 					}
 				
