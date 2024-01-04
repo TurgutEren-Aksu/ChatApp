@@ -33,6 +33,7 @@ class MainMessageViewModel: ObservableObject{
 			.collection("RecentMessage")
 			.document(uid)
 			.collection("messages")
+			.order(by: "timestamp")
 			.addSnapshotListener { QuerySnapshot, error in
 				if let error = error {
 					self.errorMessage = "Failed message to listen \(error)"
@@ -48,15 +49,17 @@ class MainMessageViewModel: ObservableObject{
 					}
 					
 					do{
-						let rm = try changes.document.data(as: RecentMessage.self)
-						self.recentMessaeg.insert(rm, at: 0)
+						if let remove = try? changes.document.data(as: RecentMessage.self){
+							self.recentMessaeg.insert(remove, at: 0)
+						}
+						
 					}
 					catch{
 						print(error)
 					}
-					if let rm = try? changes.document.data(as: RecentMessage.self) {
-						self.recentMessaeg.insert(rm, at: 0)
-					}
+//					if let remove = try? changes.document.data(as: RecentMessage.self) {
+//						self.recentMessaeg.insert(remove, at: 0)
+//					}
 //					self.recentMessaeg.insert(.init(documentId: docID, data: changes.document.data()), at: 0)
 //						self.recentMessaeg.append()
 					
@@ -173,6 +176,7 @@ struct MessageView: View {
 				VStack{
 					NavigationLink{
 						Text("Destination")
+						 
 					} label: {
 						HStack{
 							Image(systemName: "person.fill")

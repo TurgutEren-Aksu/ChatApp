@@ -106,8 +106,11 @@ class SendButton: ObservableObject{
 	}
 	private func recentMessage(){
 		guard let chatUser = chatUser else {return}
+		
 		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return}
+		
 		guard let destinationID = self.chatUser?.uid else {return}
+		
 		let document = FirebaseManager.shared.firestore
 			.collection("RecentMessage")
 			.document(uid)
