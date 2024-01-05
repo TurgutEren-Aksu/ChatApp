@@ -26,7 +26,7 @@ class MainMessageViewModel: ObservableObject{
 		recentMessage()
 	}
 	@Published var recentMessaeg = [RecentMessage]()
-	private func recentMessage(){
+	func recentMessage(){
 		guard let uid  = FirebaseManager.shared.auth.currentUser?.uid else { return }
 		
 		FirebaseManager.shared.firestore
@@ -42,15 +42,15 @@ class MainMessageViewModel: ObservableObject{
 				QuerySnapshot?.documentChanges.forEach({ changes in
 					
 						let docID = changes.document.documentID
-					if let index = self.recentMessaeg.firstIndex(where: { remove in
-						return remove.id == docID
+					if let index = self.recentMessaeg.firstIndex(where: { rm in
+						return rm.id == docID
 					}){
 						self.recentMessaeg.remove(at: index)
 					}
 					
 					do{
-						if let remove = try? changes.document.data(as: RecentMessage.self){
-							self.recentMessaeg.insert(remove, at: 0)
+						if let rm = try changes.document.data(as: RecentMessage?.self){
+							self.recentMessaeg.insert(rm, at: 0)
 						}
 						
 					}
