@@ -3,7 +3,7 @@
 //  ChatApp
 //
 //  Created by Turgut Eren Aksu on 27.11.2023.
-//
+// It's my birthday 🥳
 
 import SwiftUI
 import Firebase
