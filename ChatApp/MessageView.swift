@@ -195,7 +195,7 @@ struct MessageView: View {
 									.multilineTextAlignment(.leading)
 							}
 							Spacer()
-							Text(recentMessaeg.timestamp.description)
+							Text(recentMessaeg.timeago)
 								.font(.system(size: 14, weight: .semibold))
 						}
 					}
