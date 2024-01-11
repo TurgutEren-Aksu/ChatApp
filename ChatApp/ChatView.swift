@@ -12,7 +12,7 @@ struct FirebaseConstants{
 	static let email = "email"
 	
 }
-struct ChatMessage: Identifiable {
+struct ChatMessage: Identifiable,Decodable {
 	var id: String { documentID }
 	let documentID: String
 	let sourceID, destinationID, messageText: String
@@ -55,8 +55,16 @@ class SendButton: ObservableObject{
 				}
 				querySnapshot?.documentChanges.forEach({ change in
 					if change.type == .added {
-						let data = change.document.data()
-						self.chatMessages.append(.init(documentID: change.document.documentID, data: data))
+						do {
+							if let cm = try? change.document.data(as:ChatMessage.self) {
+								self.chatMessages.append(cm)
+								print("appending")
+							}
+						}catch{
+							print("error")
+						}
+//						let data = change.document.data()
+//						self.chatMessages.append(.init(documentID: change.document.documentID, data: data))
 					}
 				})
 				DispatchQueue.main.async {
