@@ -38,6 +38,7 @@ class SendButton: ObservableObject{
 		self.chatUser = chatUser
 		fetchMessages()
 	}
+	private var firestoreListener: ListenerRegistration?
 	private func fetchMessages(){
 		guard let sourceID = FirebaseManager.shared.auth.currentUser?.uid else { return }
 		
