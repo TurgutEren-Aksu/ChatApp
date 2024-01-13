@@ -38,7 +38,7 @@ class SendButton: ObservableObject{
 		self.chatUser = chatUser
 		fetchMessages()
 	}
-	private var firestoreListener: ListenerRegistration?
+	var firestoreListener: ListenerRegistration?
 	private func fetchMessages(){
 		guard let sourceID = FirebaseManager.shared.auth.currentUser?.uid else { return }
 		
@@ -162,6 +162,9 @@ struct ChatView: View{
 		
 		.navigationTitle(chatUser?.email ?? "")
 		.navigationBarTitleDisplayMode(.inline)
+		.onDisappear{
+			vm.firestoreListener?.remove()
+		}
 //		.navigationBarItems(trailing: Button(action: {
 //			vm.count += 1
 //		}, label: {
