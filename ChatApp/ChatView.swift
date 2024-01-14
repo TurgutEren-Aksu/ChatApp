@@ -144,13 +144,13 @@ class SendButton: ObservableObject{
 
 struct ChatView: View{
 	
-	let chatUser: ChatUser?
-	init(chatUser: ChatUser?){
-		
-		self.chatUser = chatUser
-		self.vm = .init(chatUser: chatUser)
-	}
-	
+//	let chatUser: ChatUser?
+//	init(chatUser: ChatUser?){
+//		
+//		self.chatUser = chatUser
+//		self.vm = .init(chatUser: chatUser)
+//	}
+//	
 	@State var messageText = ""
 	@ObservedObject var vm: SendButton
 	
@@ -160,7 +160,7 @@ struct ChatView: View{
 			Text(vm.errorMessage)
 		}
 		
-		.navigationTitle(chatUser?.email ?? "")
+		.navigationTitle(vm.chatUser?.email ?? "")
 		.navigationBarTitleDisplayMode(.inline)
 		.onDisappear{
 			vm.firestoreListener?.remove()

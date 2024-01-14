@@ -112,6 +112,7 @@ struct MessageView: View {
 	@State var shouldNavigateToChatLogView = false
 	@State var options = false
 	@State var shouldNewMessageButton = false
+	var chatLogViewModel = SendButton(chatUser: nil)
 	private var customNavBar: some View {
 		HStack(spacing: 16){
 			Image(systemName:"person.fill")
@@ -164,8 +165,10 @@ struct MessageView: View {
 				//				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
-				NavigationLink("", isActive: $shouldNavigateToChatLogView){
-					ChatView(chatUser: self.chatUser)
+				NavigationLink("", isActive: 
+								$shouldNavigateToChatLogView){
+//					ChatView(chatUser: self.chatUser)
+					ChatView(vm: chatLogViewModel)
 				}
 				
 				
