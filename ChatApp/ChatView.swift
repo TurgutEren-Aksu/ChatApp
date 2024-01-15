@@ -30,7 +30,7 @@ class SendButton: ObservableObject{
 	@Published var chatMessages = [ChatMessage]()
 	@Published var messageText = ""
 	@Published var errorMessage = ""
-	let chatUser: ChatUser?  
+	var chatUser: ChatUser?  
 	
 	
 
@@ -39,7 +39,7 @@ class SendButton: ObservableObject{
 		fetchMessages()
 	}
 	var firestoreListener: ListenerRegistration?
-	private func fetchMessages(){
+	func fetchMessages(){
 		guard let sourceID = FirebaseManager.shared.auth.currentUser?.uid else { return }
 		
 		guard let destinationID = chatUser?.uid else { return }

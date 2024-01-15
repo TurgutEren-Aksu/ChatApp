@@ -236,6 +236,7 @@ struct MessageView: View {
 				print(user.email)
 				self.shouldNavigateToChatLogView.toggle()
 				self.chatUser = user
+				self.chatLogViewModel.chatUser = user
 			})
 		}
 	}
