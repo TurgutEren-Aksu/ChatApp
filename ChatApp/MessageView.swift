@@ -237,6 +237,7 @@ struct MessageView: View {
 				self.shouldNavigateToChatLogView.toggle()
 				self.chatUser = user
 				self.chatLogViewModel.chatUser = user
+				self.chatLogViewModel.fetchMessages()
 			})
 		}
 	}
