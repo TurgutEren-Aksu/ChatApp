@@ -183,9 +183,8 @@ struct MessageView: View {
 		ScrollView{
 			ForEach(mv.recentMessaeg) { recentMessaeg in
 				VStack{
-					NavigationLink{
-						Text("Destination")
-						 
+					Button {
+						let  uid = FirebaseManager.shared.auth.currentUser?.uid == recentMessaeg.sourceID ? recentMessaeg.destinationID : recentMessaeg.sourceID
 					} label: {
 						HStack{
 							Image(systemName: "person.fill")
