@@ -185,6 +185,8 @@ struct MessageView: View {
 				VStack{
 					Button {
 						let  uid = FirebaseManager.shared.auth.currentUser?.uid == recentMessaeg.sourceID ? recentMessaeg.destinationID : recentMessaeg.sourceID
+						self.chatUser = .init(data: [FirebaseConstants.email: recentMessaeg.email])
+						self.chatLogViewModel.chatUser = self.chatUser
 					} label: {
 						HStack{
 							Image(systemName: "person.fill")
