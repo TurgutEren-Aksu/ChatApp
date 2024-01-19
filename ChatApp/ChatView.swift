@@ -10,6 +10,7 @@ struct FirebaseConstants{
 	static let messageText = "messageText"
 	static let timestamp = Timestamp()
 	static let email = "email"
+	static let uid = "uid"
 	
 }
 struct ChatMessage: Identifiable,Decodable {
