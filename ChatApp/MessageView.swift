@@ -188,6 +188,7 @@ struct MessageView: View {
 						self.chatUser = .init(data: [FirebaseConstants.email: recentMessaeg.email,FirebaseConstants.uid: uid])
 						self.chatLogViewModel.chatUser = self.chatUser
 						self.chatLogViewModel.fetchMessages()
+						self.shouldNavigateToChatLogView.toggle()
 					} label: {
 						HStack{
 							Image(systemName: "person.fill")
