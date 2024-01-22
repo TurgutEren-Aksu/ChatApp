@@ -184,7 +184,7 @@ struct MessageView: View {
 			ForEach(mv.recentMessaeg) { recentMessaeg in
 				VStack{
 					Button {
-						let  uid = FirebaseManager.shared.auth.currentUser?.uid == recentMessaeg.sourceID ? recentMessaeg.destinationID : recentMessaeg.sourceID
+						let uid = FirebaseManager.shared.auth.currentUser?.uid == recentMessaeg.sourceID ? recentMessaeg.destinationID : recentMessaeg.sourceID
 						self.chatUser = .init(data: [FirebaseConstants.email: recentMessaeg.email,FirebaseConstants.uid: uid])
 						self.chatLogViewModel.chatUser = self.chatUser
 						self.chatLogViewModel.fetchMessages()
