@@ -45,6 +45,7 @@ class SendButton: ObservableObject{
 		
 		guard let destinationID = chatUser?.uid else { return }
 		firestoreListener?.remove()
+		chatMessages.removeAll()
 		FirebaseManager.shared.firestore
 			.collection("messages")
 			.document(sourceID)
