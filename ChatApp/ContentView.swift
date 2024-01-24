@@ -25,9 +25,7 @@ struct ContentView: View {
 					.padding()
 					
 					if !isLoginHere {
-//						Image(systemName: "person.fill")
-//							.font(.system(size: 64))
-//							.padding()
+						
 					}
 					
 					Group {
@@ -48,7 +46,6 @@ struct ContentView: View {
 						label: {
 							Button {
 								handleAction()
-//								viewModel.updateUserLastSeen()
 							} label: {
 								HStack {
 									Spacer()

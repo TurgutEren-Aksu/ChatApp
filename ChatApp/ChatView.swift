@@ -147,13 +147,6 @@ class SendButton: ObservableObject{
 
 struct ChatView: View{
 	
-//	let chatUser: ChatUser?
-//	init(chatUser: ChatUser?){
-//		
-//		self.chatUser = chatUser
-//		self.vm = .init(chatUser: chatUser)
-//	}
-//	
 	@State var messageText = ""
 	@ObservedObject var vm: SendButton
 	
@@ -168,11 +161,6 @@ struct ChatView: View{
 		.onDisappear{
 			vm.firestoreListener?.remove()
 		}
-//		.navigationBarItems(trailing: Button(action: {
-//			vm.count += 1
-//		}, label: {
-//			Text("Count: \(vm.count)")
-//		}))
 	}
 	static let scrollToString = "Empty"
 	private var messageTopBar: some View {

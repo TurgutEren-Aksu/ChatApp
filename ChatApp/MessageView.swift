@@ -63,11 +63,6 @@ class MainMessageViewModel: ObservableObject{
 					catch{
 						print(error)
 					}
-//					if let remove = try? changes.document.data(as: RecentMessage.self) {
-//						self.recentMessaeg.insert(remove, at: 0)
-//					}
-//					self.recentMessaeg.insert(.init(documentId: docID, data: changes.document.data()), at: 0)
-//						self.recentMessaeg.append()
 					
 				})
 			}
@@ -86,17 +81,13 @@ class MainMessageViewModel: ObservableObject{
 					print("Failed to fetch user:",error)
 					return
 				}
-				//				self.errorMessage = "123"
 				guard let data = snapshot?.data() else {
 					self.errorMessage = "No data found."
 					return
 				}
-				//				print(data)
-				//				self.errorMessage = "\(data.description)"
 				
 				self.chatUser = .init(data: data)
 				
-				//				self.errorMessage = chatUser.uid
 				
 			}
 		
@@ -162,7 +153,6 @@ struct MessageView: View {
 	var body: some View {
 		NavigationView{
 			VStack{
-				//				Text("User:\(mv.chatUser?.uid ?? "")")
 				customNavBar
 				messageView
 				NavigationLink("", isActive: 
